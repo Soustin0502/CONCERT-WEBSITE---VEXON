@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VEXOR UNLEASHED '26 | TOUR STOPS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Inter:wght@400;700&amp;family=Bricolage+Grotesque:wght@800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&amp;family=Sedgwick+Ave+Display&amp;display=swap" rel="stylesheet"/>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+        .glow-lime {
+            box-shadow: 0 0 20px rgba(195, 244, 0, 0.4);
+        }
+        
+        .hollow-text {
+            -webkit-text-stroke: 1px #abd600;
+            color: transparent;
+        }
+
+        .noise-overlay {
+            display: none;
+        }
+
+        .splatter-bg {
+            background-image: radial-gradient(circle at 2px 2px, rgba(171,214,0,0.05) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+
+        .vertical-line {
+            width: 2px;
+            background: #444933;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 11px;
+        }
+
+        .custom-progress {
+            height: 20px;
+            background: #20201f;
+            display: flex;
+            gap: 2px;
+        }
+        .progress-segment {
+            flex: 1;
+            background: #abd600;
+        }
+        .progress-segment.empty {
+            background: #353535;
+        }
+
+        .book-now-spotlight {
+            --spotlight-x: 50%;
+            --spotlight-y: 50%;
+            isolation: isolate;
+        }
+
+        .book-now-spotlight::before {
+            content: "";
+            position: absolute;
+            left: var(--spotlight-x);
+            top: var(--spotlight-y);
+            width: clamp(5rem, 12vw, 8rem);
+            height: clamp(5rem, 12vw, 8rem);
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 9999px;
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(-50%, -50%) scale(0.55);
+            transition: opacity 180ms ease, transform 180ms ease;
+            z-index: 0;
+        }
+
+        .book-now-spotlight:hover::before {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .push-back-card {
+            --press-x: 50%;
+            --press-y: 50%;
+            --press-rotate-x: 0deg;
+            --press-rotate-y: 0deg;
+            isolation: isolate;
+            transform: perspective(900px) rotateX(0deg) rotateY(0deg) scale(1);
+            transform-style: preserve-3d;
+            transition: transform 80ms ease, box-shadow 80ms ease;
+            will-change: transform;
+        }
+
+        .push-back-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0;
+            background:
+                radial-gradient(circle at var(--press-x) var(--press-y), rgba(0, 0, 0, 0.42) 0 5%, rgba(0, 0, 0, 0.22) 16%, transparent 34%),
+                radial-gradient(circle at calc(100% - var(--press-x)) calc(100% - var(--press-y)), rgba(255, 255, 255, 0.18), transparent 30%);
+            transition: opacity 180ms ease;
+        }
+
+        .push-back-card:hover {
+            transform: perspective(900px) rotateX(var(--press-rotate-x)) rotateY(var(--press-rotate-y)) scale(0.985);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.42), inset 0 0 36px rgba(0, 0, 0, 0.18);
+        }
+
+        .push-back-card:hover::after {
+            opacity: 1;
+        }
+
+        .city-item.active .dot {
+            background-color: #abd600;
+            box-shadow: 0 0 15px #abd600;
+            border-color: #131313;
+            transform: scale(1.2);
+        }
+        .city-item.active h3, .city-item.active span {
+            color: #abd600 !important;
+        }
+
+        .font-brand { font-family: 'Black Ops One', cursive; }
+        .font-gritty { font-family: 'Sedgwick Ave Display', cursive; }
+
+        #venue-background {
+            transition: background-image 0.8s ease-in-out;
+            background-color: #000;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        #venue-background-mobile-list {
+            background-color: #000;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .bg-overlay {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.7), rgba(0,0,0,0.95));
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#930100",
+                        "on-surface": "#e5e2e1",
+                        "background": "#131313",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "inverse-primary": "#506600",
+                        "surface-container-low": "#1c1b1b",
+                        "on-secondary": "#690100",
+                        "on-primary-fixed": "#161e00",
+                        "surface-dim": "#131313",
+                        "on-tertiary-container": "#646464",
+                        "on-secondary-fixed": "#410000",
+                        "outline-variant": "#444933",
+                        "surface-bright": "#393939",
+                        "on-primary-container": "#556d00",
+                        "surface-tint": "#abd600",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "on-primary": "#283500",
+                        "secondary-fixed-dim": "#ffb4a8",
+                        "on-secondary-container": "#5c0000",
+                        "surface": "#131313",
+                        "inverse-on-surface": "#313030",
+                        "primary-fixed-dim": "#abd600",
+                        "on-primary-fixed-variant": "#3c4d00",
+                        "error-container": "#93000a",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "secondary-container": "#ff5540",
+                        "on-surface-variant": "#c4c9ac",
+                        "secondary-fixed": "#ffdad4",
+                        "inverse-surface": "#e5e2e1",
+                        "primary-container": "#c3f400",
+                        "tertiary": "#ffffff",
+                        "surface-container-highest": "#353535",
+                        "error": "#ffb4ab",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-error-container": "#ffdad6",
+                        "on-error": "#690005",
+                        "outline": "#8e9379",
+                        "on-tertiary": "#303030",
+                        "tertiary-fixed": "#e2e2e2",
+                        "secondary": "#ffb4a8",
+                        "primary-fixed": "#c3f400",
+                        "surface-variant": "#353535",
+                        "primary": "#ffffff",
+                        "surface-container": "#20201f",
+                        "on-background": "#e5e2e1",
+                        "tertiary-container": "#e2e2e2",
+                        "surface-container-high": "#2a2a2a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-loose": "48px",
+                        "margin-desktop": "64px",
+                        "stack-tight": "4px",
+                        "gutter": "24px",
+                        "unit": "8px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Anton"],
+                        "headline-lg": ["Anton"],
+                        "label-bold": ["Inter"],
+                        "accent-brush": ["Bricolage Grotesque"],
+                        "body-lg": ["Inter"],
+                        "display-xl": ["Anton"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["36px", {"lineHeight": "100%", "fontWeight": "400"}],
+                        "headline-lg": ["48px", {"lineHeight": "100%", "fontWeight": "400"}],
+                        "label-bold": ["14px", {"lineHeight": "120%", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                        "accent-brush": ["42px", {"lineHeight": "110%", "letterSpacing": "0.02em", "fontWeight": "800"}],
+                        "body-lg": ["18px", {"lineHeight": "160%", "fontWeight": "400"}],
+                        "display-xl": ["96px", {"lineHeight": "90%", "letterSpacing": "-0.04em", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-black text-on-surface font-body-lg min-h-screen overflow-x-hidden selection:bg-primary-fixed selection:text-on-primary-fixed">
+<div class="noise-overlay"></div>
+<!-- Background Image Container -->
+<div class="hidden md:block fixed inset-0 w-full h-full bg-contain bg-center bg-no-repeat z-0 transition-all duration-1000 ease-in-out" id="venue-background">
+<div class="absolute inset-0 bg-overlay"></div>
+</div>
+<div class="relative z-10">
+<!-- Top Navigation Anchor -->
+<header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-outline-variant flex justify-between items-center px-margin-mobile h-16 md:px-margin-desktop">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer">menu</span>
+<h1 class="font-brand text-2xl tracking-tighter text-primary">VEXOR UNLEASHED '26</h1>
+</div>
+<div class="flex items-center gap-6 hidden md:flex">
+<a class="font-label-bold text-label-bold text-primary font-bold hover:text-secondary transition-colors uppercase" href="#">Tour</a>
+<a class="font-label-bold text-label-bold text-on-surface-variant hover:text-secondary transition-colors uppercase" href="#">Tickets</a>
+<a class="font-label-bold text-label-bold text-on-surface-variant hover:text-secondary transition-colors uppercase" href="#">Merch</a>
+<a class="font-label-bold text-label-bold text-on-surface-variant hover:text-secondary transition-colors uppercase" href="#">VIP</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer">shopping_cart</span>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-24 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto pb-64">
+<div class="flex flex-col gap-8 mb-12">
+<div class="relative mb-12">
+<span class="text-on-secondary-fixed-variant font-label-bold text-xs tracking-widest block mb-2">TOUR STOPS</span>
+<div class="relative inline-block">
+<h2 class="font-display-xl text-[64px] md:text-7xl lg:text-display-xl flex flex-wrap gap-x-4 items-baseline leading-none">
+<span class="text-primary-fixed italic uppercase">WORLD</span>
+<span class="text-primary-fixed italic uppercase">TOUR</span>
+<span class="hollow-text italic uppercase">2026</span>
+</h2>
+</div>
+<p class="mt-4 font-label-bold text-on-surface-variant text-sm tracking-[0.2em] uppercase">6 CITIES. THE WORLD. UNLIMITED CHAOS.</p>
+</div>
+<!-- Layout Split: Booking Hub (Left) vs City List (Right) -->
+<div class="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-8 items-start">
+<!-- Left Column: Booking Card -->
+<div class="w-full md:w-[400px] lg:w-[450px] shrink-0 md:sticky md:top-24 z-20">
+<div class="push-back-card bg-primary text-background p-6 md:p-8 rounded-xl shadow-2xl relative overflow-hidden transition-all duration-500" id="booking-hub">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="font-display-xl text-6xl leading-none">VEXOR</span>
+</div>
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-background">location_on</span>
+<span class="font-label-bold text-xs tracking-tighter uppercase">CURRENT SELECTION</span>
+</div>
+<h2 class="font-display-xl text-5xl md:text-6xl text-primary-fixed-variant leading-none uppercase mb-2 italic" id="card-city" style="color: #abd600;">NEW YORK</h2>
+<h3 class="font-gritty text-2xl mb-6 border-b-2 border-background/20 pb-4 uppercase" id="card-venue">MADISON SQUARE GARDEN</h3>
+<div class="grid grid-cols-2 gap-4 mb-6">
+<div>
+<span class="block font-label-bold text-[10px] text-on-secondary-fixed-variant uppercase mb-1">DATE:</span>
+<span class="font-headline-lg-mobile text-lg uppercase" id="card-date">MAY 16, 2026</span>
+</div>
+<div class="border-l-2 border-background/20 pl-4">
+<span class="block font-label-bold text-[10px] text-on-secondary-fixed-variant uppercase mb-1">TIME:</span>
+<span class="font-headline-lg-mobile text-lg uppercase" id="card-time">08:00 PM</span>
+</div>
+</div>
+<div class="mb-8 border-t-2 border-background/20 pt-6">
+<div class="flex justify-between items-end mb-4">
+<div>
+<span class="block font-label-bold text-[10px] text-on-secondary-fixed-variant uppercase mb-1">TICKETS REMAINING:</span>
+<span class="font-display-xl text-4xl text-primary-fixed-variant leading-none" id="card-tickets" style="color: #abd600;">124</span>
+</div>
+<div class="text-right">
+<span class="block font-label-bold text-[10px] text-on-secondary-fixed-variant uppercase mb-1" id="card-status-label">ALMOST SOLD OUT</span>
+<span class="font-headline-lg-mobile text-lg" id="card-percent" style="color: #abd600;">92%</span>
+</div>
+</div>
+<div class="custom-progress" id="card-progress">
+<!-- Dynamically generated segments -->
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<button class="book-now-spotlight relative overflow-hidden w-full bg-primary-fixed text-background font-headline-lg-mobile text-xl py-3 flex items-center justify-center gap-4 transition-transform active:scale-95 glow-lime uppercase">
+                                    <span class="relative z-10">BOOK NOW</span>
+                                    <span class="material-symbols-outlined relative z-10 text-2xl">north_east</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: City List -->
+<div class="relative w-full overflow-hidden">
+<div class="absolute inset-0 z-0 bg-contain bg-center bg-no-repeat opacity-70 transition-all duration-1000 ease-in-out md:hidden" id="venue-background-mobile-list"></div>
+<div class="absolute inset-0 z-0 bg-black/55 md:hidden"></div>
+<div class="vertical-line z-10"></div>
+<div class="relative z-10 grid grid-cols-1 gap-y-0" id="city-list">
+<!-- City 01 -->
+<div class="city-item active relative pl-12 pb-10 group cursor-pointer" data-city="01">
+<div class="dot absolute left-0 top-1 w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background transition-all duration-300"></div>
+<div class="flex items-baseline gap-4">
+<span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed transition-colors">01</span>
+<div>
+<h3 class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed uppercase leading-none transition-colors">NEW YORK</h3>
+<p class="font-label-bold text-xs text-on-surface-variant mt-1 uppercase">USA</p>
+</div>
+</div>
+<div class="mt-4 h-[1px] w-full bg-outline-variant"></div>
+</div>
+<!-- City 02 -->
+<div class="city-item relative pl-12 pb-10 group cursor-pointer hover:translate-x-1 transition-transform" data-city="02">
+<div class="dot absolute left-0 top-1 w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background group-hover:bg-primary-fixed transition-all duration-300"></div>
+<div class="flex items-baseline gap-4">
+<span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed transition-colors">02</span>
+<div>
+<h3 class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed uppercase leading-none transition-colors">LONDON</h3>
+<p class="font-label-bold text-xs text-on-surface-variant mt-1 uppercase">UK</p>
+</div>
+</div>
+<div class="mt-4 h-[1px] w-full bg-outline-variant opacity-30"></div>
+</div>
+<!-- City 03 -->
+<div class="city-item relative pl-12 pb-10 group cursor-pointer hover:translate-x-1 transition-transform" data-city="03">
+<div class="dot absolute left-0 top-1 w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background group-hover:bg-primary-fixed transition-all duration-300"></div>
+<div class="flex items-baseline gap-4">
+<span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed transition-colors">03</span>
+<div>
+<h3 class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed uppercase leading-none transition-colors">TOKYO</h3>
+<p class="font-label-bold text-xs text-on-surface-variant mt-1 uppercase">JAPAN</p>
+</div>
+</div>
+<div class="mt-4 h-[1px] w-full bg-outline-variant opacity-30"></div>
+</div>
+<!-- City 04 -->
+<div class="city-item relative pl-12 pb-10 group cursor-pointer hover:translate-x-1 transition-transform" data-city="04">
+<div class="dot absolute left-0 top-1 w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background group-hover:bg-primary-fixed transition-all duration-300"></div>
+<div class="flex items-baseline gap-4">
+<span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed transition-colors">04</span>
+<div>
+<h3 class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed uppercase leading-none transition-colors">BERLIN</h3>
+<p class="font-label-bold text-xs text-on-surface-variant mt-1 uppercase">GERMANY</p>
+</div>
+</div>
+<div class="mt-4 h-[1px] w-full bg-outline-variant opacity-30"></div>
+</div>
+<!-- City 05 -->
+<div class="city-item relative pl-12 pb-10 group cursor-pointer hover:translate-x-1 transition-transform" data-city="05">
+<div class="dot absolute left-0 top-1 w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background group-hover:bg-primary-fixed transition-all duration-300"></div>
+<div class="flex items-baseline gap-4">
+<span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed transition-colors">05</span>
+<div>
+<h3 class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed uppercase leading-none transition-colors">MUMBAI</h3>
+<p class="font-label-bold text-xs text-on-surface-variant mt-1 uppercase">INDIA</p>
+</div>
+</div>
+<div class="mt-4 h-[1px] w-full bg-outline-variant opacity-30"></div>
+</div>
+<!-- City 06 -->
+<div class="city-item relative pl-12 group cursor-pointer hover:translate-x-1 transition-transform" data-city="06">
+<div class="dot absolute left-0 top-1 w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background group-hover:bg-primary-fixed transition-all duration-300"></div>
+<div class="flex items-baseline gap-4">
+<span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed transition-colors">06</span>
+<div>
+<h3 class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed uppercase leading-none transition-colors">SYDNEY</h3>
+<p class="font-label-bold text-xs text-on-surface-variant mt-1 uppercase">AUSTRALIA</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Stats Bar -->
+<section class="fixed bottom-16 md:bottom-0 w-full z-40 bg-surface-container-lowest border-t-2 border-primary-fixed shadow-[0_-10px_20px_rgba(171,214,0,0.2)]">
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-6">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary text-4xl">stadium</span>
+<div>
+<p class="font-label-bold text-[10px] text-on-secondary-fixed-variant uppercase mb-1">VENUE CAPACITY</p>
+<p class="font-headline-lg-mobile text-2xl text-on-surface" id="stat-capacity">20,788</p>
+</div>
+</div>
+<div class="flex items-center gap-4 md:border-l border-outline-variant md:pl-8">
+<span class="material-symbols-outlined text-secondary text-4xl">confirmation_number</span>
+<div>
+<p class="font-label-bold text-[10px] text-on-secondary-fixed-variant uppercase mb-1">TICKETS LEFT</p>
+<p class="font-headline-lg-mobile text-2xl text-on-surface" id="stat-tickets">124</p>
+</div>
+</div>
+<div class="flex items-center gap-4 md:border-l border-outline-variant md:pl-8">
+<span class="material-symbols-outlined text-secondary text-4xl">group</span>
+<div>
+<p class="font-label-bold text-[10px] text-on-secondary-fixed-variant uppercase mb-1">SPECIAL GUEST</p>
+<p class="font-headline-lg-mobile text-2xl text-on-surface uppercase" id="stat-guest">DJ RAVEN</p>
+</div>
+</div>
+<div class="flex items-center gap-4 md:border-l border-outline-variant md:pl-8">
+<span class="material-symbols-outlined text-secondary text-4xl">bolt</span>
+<div>
+<p class="font-label-bold text-[10px] text-on-secondary-fixed-variant uppercase mb-1">EXPECT</p>
+<p class="font-headline-lg-mobile text-2xl text-on-surface uppercase" id="stat-expect">PURE CHAOS</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Navigation Shell (Bottom for Mobile) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-background/95 backdrop-blur-md flex justify-around items-center px-margin-mobile py-2 border-t border-outline-variant">
+<button class="flex flex-col items-center justify-center bg-primary-fixed text-on-primary-fixed rounded-full p-2 px-6 ring-2 ring-primary-fixed-dim transition-all">
+<span class="material-symbols-outlined">event</span>
+<span class="font-label-bold text-[10px] mt-1">TOUR</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary-fixed-dim transition-colors">
+<span class="material-symbols-outlined">confirmation_number</span>
+<span class="font-label-bold text-[10px] mt-1">TICKETS</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary-fixed-dim transition-colors">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="font-label-bold text-[10px] mt-1">MERCH</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary-fixed-dim transition-colors">
+<span class="material-symbols-outlined">star</span>
+<span class="font-label-bold text-[10px] mt-1">VIP</span>
+</button>
+</nav>
+</div>
+<script>
+    const tourData = {
+        "01": {
+            city: "NEW YORK",
+            venue: "Madison Square Garden",
+            date: "May 16, 2026",
+            time: "08:00 PM",
+            tickets: "124",
+            status: "Almost Sold Out",
+            percent: 92,
+            capacity: "20,788",
+            guest: "DJ Raven",
+            expect: "Pure Chaos",
+            image: "MADISON SQUARE GARDEN (1).png"
+        },
+        "02": {
+            city: "LONDON",
+            venue: "The O2 Arena",
+            date: "June 05, 2026",
+            time: "08:30 PM",
+            tickets: "342",
+            status: "78% Sold Out",
+            percent: 78,
+            capacity: "20,000",
+            guest: "Luna V",
+            expect: "Electric Energy",
+            image: "O2 ARENA (1).png"
+        },
+        "03": {
+            city: "TOKYO",
+            venue: "Tokyo Dome",
+            date: "June 20, 2026",
+            time: "07:00 PM",
+            tickets: "87",
+            status: "95% Sold Out",
+            percent: 95,
+            capacity: "55,000",
+            guest: "Neon Pulse",
+            expect: "Future Shock",
+            image: "TOKYO DOME (1).png"
+        },
+        "04": {
+            city: "BERLIN",
+            venue: "Uber Arena",
+            date: "July 04, 2026",
+            time: "08:00 PM",
+            tickets: "529",
+            status: "71% Sold Out",
+            percent: 71,
+            capacity: "17,000",
+            guest: "KRYPTIK",
+            expect: "Total Mayhem",
+            image: "UBER ARENA (1).png"
+        },
+        "05": {
+            city: "MUMBAI",
+            venue: "Jio World Garden",
+            date: "July 25, 2026",
+            time: "08:30 PM",
+            tickets: "63",
+            status: "98% Sold Out",
+            percent: 98,
+            capacity: "18,500",
+            guest: "KSHMR",
+            expect: "Absolute Madness",
+            image: "JIO WORLD GARDEN (2).png"
+        },
+        "06": {
+            city: "SYDNEY",
+            venue: "Qudos Bank Arena",
+            date: "August 15, 2026",
+            time: "08:00 PM",
+            tickets: "416",
+            status: "74% Sold Out",
+            percent: 74,
+            capacity: "21,000",
+            guest: "Nova X",
+            expect: "UNFILTERED CHAOS.",
+            image: "QUDOS BANK ARENA (1).png"
+        }
+    };
+
+    function updateBookingCard(id) {
+        const data = tourData[id];
+        const card = document.getElementById('booking-hub');
+        const bgContainers = [
+            document.getElementById('venue-background'),
+            document.getElementById('venue-background-mobile-list')
+        ].filter(Boolean);
+        
+        // Add a slight "impact" animation to card
+        card.animate(
+            [
+                { transform: 'perspective(900px) scale(0.98)' },
+                { transform: 'perspective(900px) scale(1)' }
+            ],
+            { duration: 140, easing: 'ease-out' }
+        );
+
+        // Update Background Image
+        bgContainers.forEach((bgContainer) => {
+            bgContainer.style.backgroundImage = `url("${data.image}")`;
+        });
+
+        document.getElementById('card-city').innerText = data.city;
+        document.getElementById('card-venue').innerText = data.venue;
+        document.getElementById('card-date').innerText = data.date;
+        document.getElementById('card-time').innerText = data.time;
+        document.getElementById('card-tickets').innerText = data.tickets;
+        document.getElementById('card-status-label').innerText = data.status;
+        document.getElementById('card-percent').innerText = data.percent + '%';
+
+        // Update progress bar
+        const progressContainer = document.getElementById('card-progress');
+        progressContainer.innerHTML = '';
+        const totalSegments = 20;
+        const activeSegments = Math.round((data.percent / 100) * totalSegments);
+        
+        for (let i = 0; i < totalSegments; i++) {
+            const segment = document.createElement('div');
+            segment.className = `progress-segment ${i >= activeSegments ? 'empty' : ''}`;
+            progressContainer.appendChild(segment);
+        }
+
+        // Update Footer Stats
+        document.getElementById('stat-capacity').innerText = data.capacity;
+        document.getElementById('stat-tickets').innerText = data.tickets;
+        document.getElementById('stat-guest').innerText = data.guest;
+        document.getElementById('stat-expect').innerText = data.expect;
+    }
+
+    // Initialize list clicks
+    document.querySelectorAll('.city-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const cityId = item.getAttribute('data-city');
+            
+            // UI Update: Highlight active list item
+            document.querySelectorAll('.city-item').forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+            
+            // Logic Update: Content
+            updateBookingCard(cityId);
+        });
+    });
+
+    // Initial load
+    updateBookingCard('01');
+
+    document.querySelectorAll('.push-back-card').forEach((card) => {
+        card.addEventListener('pointermove', (event) => {
+            const rect = card.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            const xPercent = x / rect.width;
+            const yPercent = y / rect.height;
+
+            card.style.setProperty('--press-x', `${x}px`);
+            card.style.setProperty('--press-y', `${y}px`);
+            card.style.setProperty('--press-rotate-x', `${(0.5 - yPercent) * 8}deg`);
+            card.style.setProperty('--press-rotate-y', `${(xPercent - 0.5) * 8}deg`);
+        });
+
+        card.addEventListener('pointerleave', () => {
+            card.style.setProperty('--press-rotate-x', '0deg');
+            card.style.setProperty('--press-rotate-y', '0deg');
+        });
+    });
+
+    document.querySelectorAll('.book-now-spotlight').forEach((button) => {
+        button.addEventListener('pointermove', (event) => {
+            const rect = button.getBoundingClientRect();
+            button.style.setProperty('--spotlight-x', `${event.clientX - rect.left}px`);
+            button.style.setProperty('--spotlight-y', `${event.clientY - rect.top}px`);
+        });
+    });
+
+    // Reveal animation
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('opacity-100', 'translate-y-0');
+                entry.target.classList.remove('opacity-0', 'translate-y-8');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.city-item').forEach(item => {
+        item.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-8');
+        observer.observe(item);
+    });
+</script>
+</body></html>

@@ -1,0 +1,617 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>THE JOURNEY THROUGH TIME | VEXOR UNLEASHED '26</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Inter:wght@400;700&amp;family=Bricolage+Grotesque:wght@800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-surface": "#e5e2e1",
+                        "secondary-container": "#ff5540",
+                        "on-tertiary": "#303030",
+                        "on-secondary-fixed": "#410000",
+                        "on-primary": "#283500",
+                        "surface-variant": "#353535",
+                        "surface-bright": "#393939",
+                        "primary-fixed": "#c3f400",
+                        "inverse-on-surface": "#313030",
+                        "secondary-fixed": "#ffdad4",
+                        "surface-container-highest": "#353535",
+                        "outline-variant": "#444933",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "secondary": "#ffb4a8",
+                        "on-surface": "#e5e2e1",
+                        "primary-container": "#c3f400",
+                        "on-surface-variant": "#c4c9ac",
+                        "background": "#131313",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#ffb4a8",
+                        "on-background": "#e5e2e1",
+                        "on-primary-fixed-variant": "#3c4d00",
+                        "on-error": "#690005",
+                        "surface-container-low": "#1c1b1b",
+                        "outline": "#8e9379",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "surface-container-high": "#2a2a2a",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-secondary-fixed-variant": "#930100",
+                        "on-primary-fixed": "#161e00",
+                        "surface-container": "#20201f",
+                        "on-primary-container": "#556d00",
+                        "error": "#ffb4ab",
+                        "tertiary-container": "#e2e2e2",
+                        "surface-tint": "#abd600",
+                        "primary": "#ffffff",
+                        "on-secondary": "#690100",
+                        "inverse-primary": "#506600",
+                        "on-secondary-container": "#5c0000",
+                        "surface-dim": "#131313",
+                        "primary-fixed-dim": "#abd600",
+                        "error-container": "#93000a",
+                        "tertiary": "#ffffff",
+                        "on-tertiary-container": "#646464",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface": "#131313",
+                        "tour-past": "#3D400E",
+                        "tour-active": "#C3F400"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "stack-loose": "48px",
+                        "gutter": "24px",
+                        "stack-tight": "4px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "label-bold": ["Inter"],
+                        "headline-lg-mobile": ["Anton"],
+                        "headline-lg": ["Anton"],
+                        "display-xl": ["Anton"],
+                        "body-lg": ["Inter"],
+                        "accent-brush": ["Bricolage Grotesque"]
+                    },
+                    "fontSize": {
+                        "label-bold": ["14px", { "lineHeight": "120%", "letterSpacing": "0.1em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["36px", { "lineHeight": "100%", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "100%", "fontWeight": "400" }],
+                        "display-xl": ["96px", { "lineHeight": "90%", "letterSpacing": "-0.04em", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "160%", "fontWeight": "400" }],
+                        "accent-brush": ["42px", { "lineHeight": "110%", "letterSpacing": "0.02em", "fontWeight": "800" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .grit-overlay {
+            background-image: url("https://www.transparenttextures.com/patterns/asfalt-dark.png");
+            mix-blend-mode: overlay;
+            pointer-events: none;
+        }
+
+        .neon-glow-lime {
+            box-shadow: 0 0 15px rgba(195, 244, 0, 0.4), 0 0 30px rgba(195, 244, 0, 0.2);
+        }
+
+        .paint-splatter {
+            mask-image: radial-gradient(circle, black 50%, transparent 100%);
+            -webkit-mask-image: radial-gradient(circle, black 50%, transparent 100%);
+        }
+        
+        .active-timeline-center {
+            scroll-snap-align: center;
+        }
+        
+        .timeline-scroll {
+            scroll-snap-type: x mandatory;
+        }
+        
+        .city-card {
+            background: linear-gradient(135deg, #1c1b1b 0%, #131313 100%);
+            position: relative;
+        }
+        .city-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 1px solid rgba(142, 147, 121, 0.2);
+            pointer-events: none;
+        }
+        .city-card:hover::before {
+            border-color: #c3f400;
+        }
+
+        /* Logic for the background line transition */
+        #timeline-bg-past {
+            background-color: #3D400E;
+        }
+        #timeline-bg-active {
+            background-color: #C3F400;
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-lg antialiased overflow-x-hidden selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Atmospheric Overlays -->
+<div class="fixed inset-0 grit-overlay opacity-20 z-10"></div>
+<div class="fixed inset-0 pointer-events-none z-0">
+<div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary-fixed/5 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-secondary-container/5 rounded-full blur-[120px]"></div>
+</div>
+<!-- Main Content Canvas -->
+<main class="relative z-20 min-h-screen flex flex-col pt-stack-loose pb-24 px-margin-mobile md:px-margin-desktop">
+<!-- Header Section -->
+<header class="mb-stack-loose flex flex-col md:flex-row justify-between items-end gap-gutter">
+<div class="max-w-3xl">
+<p class="text-secondary-container font-label-bold text-label-bold uppercase tracking-widest mb-stack-tight">THE JOURNEY CONTINUES</p>
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase italic tracking-tighter leading-none mb-2">
+                THE JOURNEY <span class="text-primary-fixed block md:inline">THROUGH TIME</span>
+</h1>
+<p class="font-label-bold text-label-bold text-on-surface-variant opacity-70">PAST. PRESENT. FUTURE. <span class="text-secondary-container">CHAOS NEVER STOPS.</span></p>
+</div>
+<div class="hidden md:flex flex-col items-end">
+<div class="flex items-center gap-4 mb-2">
+<div class="w-12 h-0.5 bg-tour-past"></div>
+<span class="font-label-bold text-[10px] text-on-surface-variant uppercase">Past Tours</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-12 h-1 bg-primary-fixed neon-glow-lime"></div>
+<span class="font-label-bold text-[10px] text-primary-fixed uppercase">Upcoming Tour</span>
+</div>
+</div>
+</header>
+<!-- Timeline Interaction Area -->
+<div class="relative w-full" id="timeline-container">
+<!-- Timeline Horizontal Axis (Background line) -->
+<div class="absolute top-12 left-0 w-full h-[2px] z-0 flex" id="timeline-background-line">
+<!-- Dynamic widths calculated via script or set here as approximate based on element count -->
+<div class="h-full" id="timeline-bg-past" style="width: 71.0263%;"></div>
+<div class="h-full" id="timeline-bg-active" style="width: 28.9737%;"></div>
+</div>
+<!-- Scrollable Content -->
+<div class="timeline-scroll flex overflow-x-auto no-scrollbar gap-8 md:gap-12 items-start pt-4 px-[10%] md:px-[40%]" id="scroll-surface">
+<!-- 2023 MARKER -->
+<div class="flex-shrink-0 w-24 flex flex-col items-center">
+<div class="relative flex flex-col items-center mb-12">
+<div class="w-6 h-6 rounded-full bg-background border-4 border-tour-past z-10"></div>
+<h3 class="font-label-bold text-[12px] text-on-surface-variant mt-4">2023</h3>
+</div>
+</div>
+<!-- 2023 CITIES (Ignition) -->
+<article class="flex-shrink-0 w-[260px] active-timeline-center mt-16" style="opacity: 0.4; transform: scale(0.9);">
+<div class="city-card p-5 border-l-2 border-tour-past group">
+<p class="text-[10px] font-label-bold text-tour-past uppercase mb-1">IGNITION TOUR</p>
+<h4 class="font-headline-lg-mobile text-xl text-primary">LAS VEGAS</h4>
+<p class="text-[12px] text-on-surface-variant">USA • T-MOBILE ARENA</p>
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex justify-between">
+<span class="text-[10px] font-label-bold opacity-50 uppercase">Fans</span>
+<span class="text-[12px] font-headline-lg-mobile text-on-surface">18.5K</span>
+</div>
+</div>
+</article>
+<article class="flex-shrink-0 w-[260px] active-timeline-center mt-16" style="opacity: 0.4; transform: scale(0.9);">
+<div class="city-card p-5 border-l-2 border-tour-past group">
+<p class="text-[10px] font-label-bold text-tour-past uppercase mb-1">IGNITION TOUR</p>
+<h4 class="font-headline-lg-mobile text-xl text-primary">TORONTO</h4>
+<p class="text-[12px] text-on-surface-variant">CANADA • SCOTIABANK ARENA</p>
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex justify-between">
+<span class="text-[10px] font-label-bold opacity-50 uppercase">Fans</span>
+<span class="text-[12px] font-headline-lg-mobile text-on-surface">16.8K</span>
+</div>
+</div>
+</article>
+<article class="flex-shrink-0 w-[260px] active-timeline-center mt-16" style="opacity: 0.4; transform: scale(0.9);">
+<div class="city-card p-5 border-l-2 border-tour-past group">
+<p class="text-[10px] font-label-bold text-tour-past uppercase mb-1">IGNITION TOUR</p>
+<h4 class="font-headline-lg-mobile text-xl text-primary">MEXICO CITY</h4>
+<p class="text-[12px] text-on-surface-variant">MEXICO • FORO SOL</p>
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex justify-between">
+<span class="text-[10px] font-label-bold opacity-50 uppercase">Fans</span>
+<span class="text-[12px] font-headline-lg-mobile text-on-surface">22.4K</span>
+</div>
+</div>
+</article>
+<article class="flex-shrink-0 w-[260px] active-timeline-center mt-16" style="opacity: 0.4; transform: scale(0.9);">
+<div class="city-card p-5 border-l-2 border-tour-past group">
+<p class="text-[10px] font-label-bold text-tour-past uppercase mb-1">IGNITION TOUR</p>
+<h4 class="font-headline-lg-mobile text-xl text-primary">AMSTERDAM</h4>
+<p class="text-[12px] text-on-surface-variant">NETHERLANDS • ZIGGO DOME</p>
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex justify-between">
+<span class="text-[10px] font-label-bold opacity-50 uppercase">Fans</span>
+<span class="text-[12px] font-headline-lg-mobile text-on-surface">20.7K</span>
+</div>
+</div>
+</article>
+<article class="flex-shrink-0 w-[260px] active-timeline-center mt-16" style="opacity: 0.4; transform: scale(0.9);">
+<div class="city-card p-5 border-l-2 border-tour-past group">
+<p class="text-[10px] font-label-bold text-tour-past uppercase mb-1">IGNITION TOUR</p>
+<h4 class="font-headline-lg-mobile text-xl text-primary">PRAGUE</h4>
+<p class="text-[12px] text-on-surface-variant">CZECH REPUBLIC • O2 ARENA</p>
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex justify-between">
+<span class="text-[10px] font-label-bold opacity-50 uppercase">Fans</span>
+<span class="text-[12px] font-headline-lg-mobile text-on-surface">17.5K</span>
+</div>
+</div>
+</article>
+<article class="flex-shrink-0 w-[260px] active-timeline-center mt-16" style="opacity: 0.4; transform: scale(0.9);">
+<div class="city-card p-5 border-l-2 border-tour-past group">
+<p class="text-[10px] font-label-bold text-tour-past uppercase mb-1">IGNITION TOUR</p>
+<h4 class="font-headline-lg-mobile text-xl text-primary">ISTANBUL</h4>
+<p class="text-[12px] text-on-surface-variant">TURKEY • ÜLKER ARENA</p>
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex justify-between">
+<span class="text-[10px] font-label-bold opacity-50 uppercase">Fans</span>
+<span class="text-[12px] font-headline-lg-mobile text-on-surface">22.5K</span>
+</div>
+</div>
+</article>
+<!-- 2024 MARKER -->
+<div class="flex-shrink-0 w-24 flex flex-col items-center">
+<div class="relative flex flex-col items-center mb-12">
+<div class="w-6 h-6 rounded-full bg-background border-4 border-tour-past z-10"></div>
+<h3 class="font-label-bold text-[12px] text-on-surface-variant mt-4">2024</h3>
+</div>
+</div>
+<!-- 2024 CITIES (Neon Horizons) -->
+<article class="flex-shrink-0 w-[260px] active-timeline-center mt-16" style="opacity: 0.4; transform: scale(0.9);">
+<div class="city-card p-5 border-l-2 border-tour-past group">
+<p class="text-[10px] font-label-bold text-tour-past uppercase mb-1">NEON HORIZONS</p>
+<h4 class="font-headline-lg-mobile text-xl text-primary">SEOUL</h4>
+<p class="text-[12px] text-on-surface-variant">S. KOREA • OLYMPIC STADIUM</p>
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex justify-between">
+<span class="text-[10px] font-label-bold opacity-50 uppercase">Fans</span>
+<span class="text-[12px] font-headline-lg-mobile text-on-surface">38.5K</span>
+</div>
+</div>
+</article>
+<article class="flex-shrink-0 w-[260px] active-timeline-center mt-16" style="opacity: 0.4; transform: scale(0.9);">
+<div class="city-card p-5 border-l-2 border-tour-past group">
+<p class="text-[10px] font-label-bold text-tour-past uppercase mb-1">NEON HORIZONS</p>
+<h4 class="font-headline-lg-mobile text-xl text-primary">SINGAPORE</h4>
+<p class="text-[12px] text-on-surface-variant">SG • NATIONAL STADIUM</p>
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex justify-between">
+<span class="text-[10px] font-label-bold opacity-50 uppercase">Fans</span>
+<span class="text-[12px] font-headline-lg-mobile text-on-surface">32.2K</span>
+</div>
+</div>
+</article>
+<article class="flex-shrink-0 w-[260px] active-timeline-center mt-16" style="opacity: 0.4; transform: scale(0.9);">
+<div class="city-card p-5 border-l-2 border-tour-past group">
+<p class="text-[10px] font-label-bold text-tour-past uppercase mb-1">NEON HORIZONS</p>
+<h4 class="font-headline-lg-mobile text-xl text-primary">BANGKOK</h4>
+<p class="text-[12px] text-on-surface-variant">THAILAND • RAJAMANGALA</p>
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex justify-between">
+<span class="text-[10px] font-label-bold opacity-50 uppercase">Fans</span>
+<span class="text-[12px] font-headline-lg-mobile text-on-surface">34.8K</span>
+</div>
+</div>
+</article>
+<article class="flex-shrink-0 w-[260px] active-timeline-center mt-16" style="opacity: 0.4; transform: scale(0.9);">
+<div class="city-card p-5 border-l-2 border-tour-past group">
+<p class="text-[10px] font-label-bold text-tour-past uppercase mb-1">NEON HORIZONS</p>
+<h4 class="font-headline-lg-mobile text-xl text-primary">KUALA LUMPUR</h4>
+<p class="text-[12px] text-on-surface-variant">MALAYSIA • BUKIT JALIL</p>
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex justify-between">
+<span class="text-[10px] font-label-bold opacity-50 uppercase">Fans</span>
+<span class="text-[12px] font-headline-lg-mobile text-on-surface">29.6K</span>
+</div>
+</div>
+</article>
+<article class="flex-shrink-0 w-[260px] active-timeline-center mt-16" style="opacity: 0.4; transform: scale(0.9);">
+<div class="city-card p-5 border-l-2 border-tour-past group">
+<p class="text-[10px] font-label-bold text-tour-past uppercase mb-1">NEON HORIZONS</p>
+<h4 class="font-headline-lg-mobile text-xl text-primary">MELBOURNE</h4>
+<p class="text-[12px] text-on-surface-variant">AUSTRALIA • MARVEL STADIUM</p>
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex justify-between">
+<span class="text-[10px] font-label-bold opacity-50 uppercase">Fans</span>
+<span class="text-[12px] font-headline-lg-mobile text-on-surface">41K</span>
+</div>
+</div>
+</article>
+<article class="flex-shrink-0 w-[260px] active-timeline-center mt-16" style="opacity: 0.4; transform: scale(0.9);">
+<div class="city-card p-5 border-l-2 border-tour-past group">
+<p class="text-[10px] font-label-bold text-tour-past uppercase mb-1">NEON HORIZONS</p>
+<h4 class="font-headline-lg-mobile text-xl text-primary">AUCKLAND</h4>
+<p class="text-[12px] text-on-surface-variant">NZ • EDEN PARK</p>
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex justify-between">
+<span class="text-[10px] font-label-bold opacity-50 uppercase">Fans</span>
+<span class="text-[12px] font-headline-lg-mobile text-on-surface">45.2K</span>
+</div>
+</div>
+</article>
+<!-- 2025 MARKER -->
+<div class="flex-shrink-0 w-24 flex flex-col items-center">
+<div class="relative flex flex-col items-center mb-12">
+<div class="w-6 h-6 rounded-full bg-background border-4 border-tour-past z-10"></div>
+<h3 class="font-label-bold text-[12px] text-on-surface-variant mt-4">2025</h3>
+</div>
+</div>
+<!-- 2025 CITIES (Chaos Rising) -->
+<article class="flex-shrink-0 w-[260px] active-timeline-center mt-16" style="opacity: 0.4; transform: scale(0.9);">
+<div class="city-card p-5 border-l-2 border-tour-past group">
+<p class="text-[10px] font-label-bold text-tour-past uppercase mb-1">CHAOS RISING</p>
+<h4 class="font-headline-lg-mobile text-xl text-primary">LOS ANGELES</h4>
+<p class="text-[12px] text-on-surface-variant">USA • SOFI STADIUM</p>
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex justify-between">
+<span class="text-[10px] font-label-bold opacity-50 uppercase">Fans</span>
+<span class="text-[12px] font-headline-lg-mobile text-on-surface">72.5K</span>
+</div>
+</div>
+</article>
+<article class="flex-shrink-0 w-[260px] active-timeline-center mt-16" style="opacity: 0.4; transform: scale(0.9);">
+<div class="city-card p-5 border-l-2 border-tour-past group">
+<p class="text-[10px] font-label-bold text-tour-past uppercase mb-1">CHAOS RISING</p>
+<h4 class="font-headline-lg-mobile text-xl text-primary">SÃO PAULO</h4>
+<p class="text-[12px] text-on-surface-variant">BRAZIL • ALLIANZ PARQUE</p>
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex justify-between">
+<span class="text-[10px] font-label-bold opacity-50 uppercase">Fans</span>
+<span class="text-[12px] font-headline-lg-mobile text-on-surface">81.3K</span>
+</div>
+</div>
+</article>
+<article class="flex-shrink-0 w-[260px] active-timeline-center mt-16" style="opacity: 0.4; transform: scale(0.9);">
+<div class="city-card p-5 border-l-2 border-tour-past group">
+<p class="text-[10px] font-label-bold text-tour-past uppercase mb-1">CHAOS RISING</p>
+<h4 class="font-headline-lg-mobile text-xl text-primary">CAPE TOWN</h4>
+<p class="text-[12px] text-on-surface-variant">SOUTH AFRICA • DHL STADIUM</p>
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex justify-between">
+<span class="text-[10px] font-label-bold opacity-50 uppercase">Fans</span>
+<span class="text-[12px] font-headline-lg-mobile text-on-surface">58.7K</span>
+</div>
+</div>
+</article>
+<article class="flex-shrink-0 w-[260px] active-timeline-center mt-16" style="opacity: 0.4; transform: scale(0.9);">
+<div class="city-card p-5 border-l-2 border-tour-past group">
+<p class="text-[10px] font-label-bold text-tour-past uppercase mb-1">CHAOS RISING</p>
+<h4 class="font-headline-lg-mobile text-xl text-primary">DUBAI</h4>
+<p class="text-[12px] text-on-surface-variant">UAE • COCA-COLA ARENA</p>
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex justify-between">
+<span class="text-[10px] font-label-bold opacity-50 uppercase">Fans</span>
+<span class="text-[12px] font-headline-lg-mobile text-on-surface">61.4K</span>
+</div>
+</div>
+</article>
+<article class="flex-shrink-0 w-[260px] active-timeline-center mt-16" style="opacity: 0.4; transform: scale(0.9);">
+<div class="city-card p-5 border-l-2 border-tour-past group">
+<p class="text-[10px] font-label-bold text-tour-past uppercase mb-1">CHAOS RISING</p>
+<h4 class="font-headline-lg-mobile text-xl text-primary">MADRID</h4>
+<p class="text-[12px] text-on-surface-variant">SPAIN • METROPOLITANO</p>
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex justify-between">
+<span class="text-[10px] font-label-bold opacity-50 uppercase">Fans</span>
+<span class="text-[12px] font-headline-lg-mobile text-on-surface">69.2K</span>
+</div>
+</div>
+</article>
+<article class="flex-shrink-0 w-[260px] active-timeline-center mt-16" style="opacity: 0.4; transform: scale(0.9);">
+<div class="city-card p-5 border-l-2 border-tour-past group">
+<p class="text-[10px] font-label-bold text-tour-past uppercase mb-1">CHAOS RISING</p>
+<h4 class="font-headline-lg-mobile text-xl text-primary">PARIS</h4>
+<p class="text-[12px] text-on-surface-variant">FRANCE • STADE DE FRANCE</p>
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex justify-between">
+<span class="text-[10px] font-label-bold opacity-50 uppercase">Fans</span>
+<span class="text-[12px] font-headline-lg-mobile text-on-surface">76.5K</span>
+</div>
+</div>
+</article>
+<!-- 2026 MARKER - TRANSITION POINT -->
+<div class="flex-shrink-0 w-48 flex flex-col items-center" id="current-year-marker">
+<div class="relative flex flex-col items-center mb-12">
+<div class="absolute -top-4 w-16 h-16 bg-primary-fixed/20 rounded-full blur-xl animate-pulse"></div>
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center z-10 neon-glow-lime">
+<div class="w-4 h-4 rounded-full bg-background"></div>
+</div>
+<h3 class="font-headline-lg text-primary-fixed mt-4 tracking-tighter">2026</h3>
+<p class="text-[10px] font-label-bold text-primary-fixed uppercase tracking-widest mt-1">CURRENT</p>
+</div>
+</div>
+<!-- 2026 CITIES (World Tour) -->
+<article class="flex-shrink-0 w-[280px] active-timeline-center mt-16" id="unleashed-start" style="opacity: 0.999444; transform: scale(0.999667);">
+<div class="city-card p-6 border-l-4 border-primary-fixed group relative overflow-hidden">
+<div class="absolute -right-4 -top-4 opacity-5 pointer-events-none">
+<span class="material-symbols-outlined text-8xl text-primary-fixed">bolt</span>
+</div>
+<p class="text-[10px] font-label-bold text-primary-fixed uppercase mb-2">WORLD TOUR '26</p>
+<h4 class="font-headline-lg-mobile text-2xl text-primary">NEW YORK</h4>
+<p class="text-[14px] text-on-surface-variant">USA • MADISON SQUARE GARDEN</p>
+<div class="mt-6 pt-4 border-t border-outline-variant/30 flex justify-between items-center">
+<div>
+<span class="text-[10px] font-label-bold opacity-50 uppercase block text-primary-fixed">UPCOMING</span>
+<span class="text-[12px] font-label-bold text-on-surface-variant">362 TICKETS LEFT</span>
+</div>
+<span class="material-symbols-outlined text-primary-fixed">confirmation_number</span>
+</div>
+</div>
+</article>
+<article class="flex-shrink-0 w-[280px] active-timeline-center mt-16" style="opacity: 0.452778; transform: scale(0.9);">
+<div class="city-card p-6 border-l-4 border-primary-fixed group relative overflow-hidden">
+<p class="text-[10px] font-label-bold text-primary-fixed uppercase mb-2">WORLD TOUR '26</p>
+<h4 class="font-headline-lg-mobile text-2xl text-primary">LONDON</h4>
+<p class="text-[14px] text-on-surface-variant">UK • THE O2 ARENA</p>
+<div class="mt-6 pt-4 border-t border-outline-variant/30 flex justify-between items-center">
+<div>
+<span class="text-[10px] font-label-bold opacity-50 uppercase block text-primary-fixed">UPCOMING</span>
+<span class="text-[12px] font-label-bold text-on-surface-variant">214 TICKETS LEFT</span>
+</div>
+<span class="material-symbols-outlined text-primary-fixed">confirmation_number</span>
+</div>
+</div>
+</article>
+<article class="flex-shrink-0 w-[280px] active-timeline-center mt-16" style="opacity: 0.4; transform: scale(0.9);">
+<div class="city-card p-6 border-l-4 border-primary-fixed group relative overflow-hidden">
+<p class="text-[10px] font-label-bold text-primary-fixed uppercase mb-2">WORLD TOUR '26</p>
+<h4 class="font-headline-lg-mobile text-2xl text-primary">TOKYO</h4>
+<p class="text-[14px] text-on-surface-variant">JAPAN • TOKYO DOME</p>
+<div class="mt-6 pt-4 border-t border-outline-variant/30 flex justify-between items-center">
+<div>
+<span class="text-[10px] font-label-bold opacity-50 uppercase block text-primary-fixed">UPCOMING</span>
+<span class="text-[12px] font-label-bold text-on-surface-variant">189 TICKETS LEFT</span>
+</div>
+<span class="material-symbols-outlined text-primary-fixed">confirmation_number</span>
+</div>
+</div>
+</article>
+<article class="flex-shrink-0 w-[280px] active-timeline-center mt-16" style="opacity: 0.4; transform: scale(0.9);">
+<div class="city-card p-6 border-l-4 border-primary-fixed group relative overflow-hidden">
+<p class="text-[10px] font-label-bold text-primary-fixed uppercase mb-2">WORLD TOUR '26</p>
+<h4 class="font-headline-lg-mobile text-2xl text-primary">BERLIN</h4>
+<p class="text-[14px] text-on-surface-variant">GERMANY • MB ARENA</p>
+<div class="mt-6 pt-4 border-t border-outline-variant/30 flex justify-between items-center">
+<div>
+<span class="text-[10px] font-label-bold opacity-50 uppercase block text-primary-fixed">UPCOMING</span>
+<span class="text-[12px] font-label-bold text-on-surface-variant">245 TICKETS LEFT</span>
+</div>
+<span class="material-symbols-outlined text-primary-fixed">confirmation_number</span>
+</div>
+</div>
+</article>
+<article class="flex-shrink-0 w-[280px] active-timeline-center mt-16" style="opacity: 0.4; transform: scale(0.9);">
+<div class="city-card p-6 border-l-4 border-primary-fixed group relative overflow-hidden">
+<p class="text-[10px] font-label-bold text-primary-fixed uppercase mb-2">WORLD TOUR '26</p>
+<h4 class="font-headline-lg-mobile text-2xl text-primary">MUMBAI</h4>
+<p class="text-[14px] text-on-surface-variant">INDIA • DY PATIL STADIUM</p>
+<div class="mt-6 pt-4 border-t border-outline-variant/30 flex justify-between items-center">
+<div>
+<span class="text-[10px] font-label-bold opacity-50 uppercase block text-primary-fixed">UPCOMING</span>
+<span class="text-[12px] font-label-bold text-on-surface-variant">178 TICKETS LEFT</span>
+</div>
+<span class="material-symbols-outlined text-primary-fixed">confirmation_number</span>
+</div>
+</div>
+</article>
+<article class="flex-shrink-0 w-[280px] active-timeline-center mt-16" style="opacity: 0.4; transform: scale(0.9);">
+<div class="city-card p-6 border-l-4 border-primary-fixed group relative overflow-hidden">
+<p class="text-[10px] font-label-bold text-primary-fixed uppercase mb-2">WORLD TOUR '26</p>
+<h4 class="font-headline-lg-mobile text-2xl text-primary">SYDNEY</h4>
+<p class="text-[14px] text-on-surface-variant">AUSTRALIA • ACCOR STADIUM</p>
+<div class="mt-6 pt-4 border-t border-outline-variant/30 flex justify-between items-center">
+<div>
+<span class="text-[10px] font-label-bold opacity-50 uppercase block text-primary-fixed">UPCOMING</span>
+<span class="text-[12px] font-label-bold text-on-surface-variant">TICKETS LEFT</span>
+</div>
+<span class="material-symbols-outlined text-primary-fixed">confirmation_number</span>
+</div>
+</div>
+</article>
+<!-- Final Spacer -->
+<div class="flex-shrink-0 w-[10%] md:w-[40%]"></div>
+</div>
+</div>
+<!-- Footer Stats Bar -->
+<footer class="mt-auto pt-stack-loose">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-gutter border-t border-outline-variant pt-gutter">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-3xl text-on-surface-variant">groups</span>
+<div>
+<p class="font-headline-lg-mobile text-2xl">759,300+</p>
+<p class="text-[10px] font-label-bold text-on-surface-variant uppercase">Fans Worldwide</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-3xl text-on-surface-variant">public</span>
+<div>
+<p class="font-headline-lg-mobile text-2xl">18</p>
+<p class="text-[10px] font-label-bold text-on-surface-variant uppercase">Countries</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-3xl text-on-surface-variant">mic</span>
+<div>
+<p class="font-headline-lg-mobile text-2xl">18</p>
+<p class="text-[10px] font-label-bold text-on-surface-variant uppercase">Shows Completed</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-3xl text-primary-fixed">bolt</span>
+<div><p class="font-headline-lg-mobile text-2xl text-primary-fixed">04</p><p class="text-[10px] font-label-bold text-on-surface-variant uppercase">Unstoppable Journeys</p></div>
+</div>
+</div>
+<div class="mt-gutter flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-4">
+<p class="font-accent-brush text-on-surface-variant text-[14px]">A NEW CHAPTER. <span class="text-primary-fixed">UNLEASH THE CHAOS.</span></p>
+<div class="flex gap-6">
+<a class="text-[10px] font-label-bold text-on-surface-variant hover:text-primary-fixed transition-colors" href="#">THE PAST BUILT US.</a>
+<a class="text-[10px] font-label-bold text-primary-fixed underline underline-offset-4" href="#">THE FUTURE AWAITS.</a>
+</div>
+</div>
+</footer>
+</main>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const scroller = document.getElementById('scroll-surface');
+        const targetMarker = document.getElementById('current-year-marker');
+        const pastBg = document.getElementById('timeline-bg-past');
+        const activeBg = document.getElementById('timeline-bg-active');
+
+        // Focus on 2026 Start initially
+        if (targetMarker) {
+            const targetOffset = targetMarker.offsetLeft - (scroller.clientWidth / 2) + (targetMarker.clientWidth / 2);
+            scroller.scrollTo({
+                left: targetOffset,
+                behavior: 'smooth'
+            });
+        }
+
+        const updateTimelineLine = () => {
+            const containerWidth = scroller.scrollWidth;
+            const markerPos = targetMarker.offsetLeft + (targetMarker.clientWidth / 2);
+            
+            const pastPercent = (markerPos / containerWidth) * 100;
+            const activePercent = 100 - pastPercent;
+            
+            pastBg.style.width = `${pastPercent}%`;
+            activeBg.style.width = `${activePercent}%`;
+        };
+
+        // Initial update for line
+        setTimeout(updateTimelineLine, 100);
+
+        // Interactive states for cards on scroll
+        scroller.addEventListener('scroll', () => {
+            const center = scroller.scrollLeft + (scroller.clientWidth / 2);
+            const cards = scroller.querySelectorAll('article');
+            
+            cards.forEach(card => {
+                const cardCenter = card.offsetLeft + (card.clientWidth / 2);
+                const distance = Math.abs(center - cardCenter);
+                
+                // Focus effect
+                const scale = Math.max(0.9, 1 - (distance / 1000));
+                const opacity = Math.max(0.4, 1 - (distance / 600));
+                
+                card.style.opacity = opacity;
+                card.style.transform = `scale(${scale})`;
+            });
+        });
+        
+        window.addEventListener('resize', updateTimelineLine);
+    });
+</script>
+
+
+</body></html>
