@@ -1406,10 +1406,79 @@
         const backdrop = document.getElementById("menu-backdrop");
         const links = menu.querySelectorAll("a");
 
+        function setupMobileMenuTouchHover() {
+          const staggerLinks = menu.querySelectorAll("[stagger-link]");
+          
+          function triggerStaggerHover(link) {
+            if (!window.gsap) return;
+            const letters = link.querySelectorAll('.char');
+            if (letters.length === 0) return;
+            
+            window.gsap.to(letters, {
+              yPercent: -100,
+              duration: 0.28,
+              ease: "power4.out",
+              stagger: 0.008,
+              overwrite: true,
+            });
+          }
+
+          function triggerStaggerLeave(link) {
+            if (!window.gsap) return;
+            const letters = link.querySelectorAll('.char');
+            if (letters.length === 0) return;
+            
+            window.gsap.to(letters, {
+              yPercent: 0,
+              duration: 0.28,
+              ease: "power4.out",
+              stagger: 0.008,
+              overwrite: true,
+            });
+          }
+
+          staggerLinks.forEach(link => {
+            let touchTimeout;
+            let isActive = false;
+
+            link.addEventListener('touchstart', (e) => {
+              isActive = true;
+              clearTimeout(touchTimeout);
+              triggerStaggerHover(link);
+            }, { passive: true });
+
+            link.addEventListener('touchend', (e) => {
+              if (!isActive) return;
+              touchTimeout = setTimeout(() => {
+                isActive = false;
+                triggerStaggerLeave(link);
+              }, 300);
+            }, { passive: true });
+
+            link.addEventListener('touchcancel', () => {
+              isActive = false;
+              clearTimeout(touchTimeout);
+              triggerStaggerLeave(link);
+            }, { passive: true });
+
+            link.addEventListener('touchmove', (e) => {
+              if (!isActive) return;
+              const touch = e.touches[0];
+              const target = document.elementFromPoint(touch.clientX, touch.clientY);
+              if (!link.contains(target)) {
+                isActive = false;
+                clearTimeout(touchTimeout);
+                triggerStaggerLeave(link);
+              }
+            }, { passive: true });
+          });
+        }
+
         function openMenu() {
           menu.classList.remove("hidden");
           icon.textContent = "close";
           initStaggerLinks();
+          setTimeout(setupMobileMenuTouchHover, 0);
         }
 
         function closeMenu() {
