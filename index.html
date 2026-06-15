@@ -770,9 +770,9 @@
               style="font-family: 'Sedgwick Ave Display', cursive"
             >UNLEASHED</span>
           </div>
-          <div class="flex w-fit flex-col items-end">
-            <div class="tour-label-underline h-1 sm:h-1.5 md:h-2 bg-secondary-container rounded-full opacity-90"></div>
-            <span class="font-label-bold text-label-bold tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.5em] text-white text-sm sm:text-base md:text-base lg:text-xl xl:text-[19px] mt-0.5 sm:mt-1 md:mt-2">WORLD TOUR 2026</span>
+<div class="flex w-fit flex-col items-end">
+            <div class="tour-label-underline h-[clamp(1px,0.5vw,2px)] bg-secondary-container rounded-full opacity-90"></div>
+            <span class="font-label-bold text-label-bold tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.5em] text-white text-[clamp(0.7rem,3vw,1.2rem)] mt-[clamp(0.25rem,1vw,0.5rem)]">WORLD TOUR 2026</span>
           </div>
         </div>
       </div>
@@ -1399,7 +1399,7 @@
 
     <!-- Mobile Menu Script -->
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
+      function initMobileMenu() {
         const toggle = document.getElementById("menu-toggle");
         const menu = document.getElementById("mobile-menu");
         const icon = document.getElementById("menu-icon");
@@ -1422,11 +1422,25 @@
           else closeMenu();
         });
 
+        toggle.addEventListener("touchend", (e) => {
+          e.preventDefault();
+          if (menu.classList.contains("hidden")) openMenu();
+          else closeMenu();
+        }, { passive: false });
+
         backdrop.addEventListener("click", closeMenu);
+        backdrop.addEventListener("touchend", closeMenu, { passive: true });
 
         links.forEach((link) => {
           link.addEventListener("click", closeMenu);
+          link.addEventListener("touchend", closeMenu, { passive: true });
       });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initMobileMenu);
+    } else {
+      initMobileMenu();
     }
   </script>
 
@@ -1706,6 +1720,70 @@
           console.info("SheryJS is ready for future visual effects.");
         }
       });
+
+      function enableTouchHover() {
+        const hoverElements = document.querySelectorAll('[class*="hover:"], [class*="group-hover:"], .push-back-card, .book-now-spotlight, .trailer-spotlight, .ticket-spotlight, .city-item, .city-card');
+
+        hoverElements.forEach(el => {
+          let touchTimeout;
+
+          el.addEventListener('touchstart', function(e) {
+            this.classList.add('touch-active');
+            clearTimeout(touchTimeout);
+          }, { passive: true });
+
+          el.addEventListener('touchend', function(e) {
+            touchTimeout = setTimeout(() => {
+              this.classList.remove('touch-active');
+            }, 300);
+          }, { passive: true });
+
+          el.addEventListener('touchcancel', function(e) {
+            this.classList.remove('touch-active');
+          }, { passive: true });
+        });
+
+        const style = document.createElement('style');
+        style.textContent = `
+          .touch-active.push-back-card {
+            transform: perspective(900px) rotateX(var(--press-rotate-x, 0deg)) rotateY(var(--press-rotate-y, 0deg)) scale(0.985);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.42), inset 0 0 36px rgba(0, 0, 0, 0.18);
+          }
+          .touch-active.push-back-card::after {
+            opacity: 1;
+          }
+          .touch-active.book-now-spotlight::before,
+          .touch-active.trailer-spotlight::before,
+          .touch-active.ticket-spotlight::before {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+          }
+          .touch-active.city-item .dot {
+            background-color: #abd600;
+            box-shadow: 0 0 0 4px #131313, 0 0 15px #abd600, 0 0 30px #abd600;
+            border-color: #131313;
+            transform: scale(1.2);
+            z-index: 10;
+          }
+          .touch-active.city-item h3,
+          .touch-active.city-item span {
+            color: #abd600;
+          }
+          .touch-active.city-card::before {
+            border-color: #c3f400;
+          }
+          .touch-active[stagger-link] [stagger-link-text],
+          .touch-active[stagger-link] .char {
+            text-shadow: 0 1.1em 0 #c3f400;
+          }
+          .touch-active.glow-sm {
+            text-shadow: 0 0 10px rgba(195, 244, 0, 0.6);
+          }
+        `;
+        document.head.appendChild(style);
+      }
+
+      document.addEventListener('DOMContentLoaded', enableTouchHover);
 
       document.addEventListener("mousemove", (e) => {
         const x = (e.clientX / window.innerWidth - 0.5) * 20;
