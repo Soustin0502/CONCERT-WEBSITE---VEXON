@@ -263,8 +263,80 @@
         background: #abd600;
       }
 
-      .progress-segment.empty {
+.progress-segment.empty {
         background: #353535;
+      }
+
+      .custom-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+
+      html {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+      html::-webkit-scrollbar {
+        display: none;
+      }
+
+      #scroll-progress {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 4px;
+        height: 100vh;
+        background: transparent;
+        z-index: 9999;
+        transition: width 0.2s ease;
+        cursor: pointer;
+      }
+
+      .progress-fill {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 4px;
+        background: #c3f400;
+        border-radius: 2px 0 0 2px;
+        box-shadow: -4px 0 10px rgba(195, 244, 0, 0.4), -8px 0 20px rgba(195, 244, 0, 0.2);
+        height: 0%;
+        transition: height 0.1s linear, width 0.2s ease, border-radius 0.2s ease;
+      }
+
+      .scroll-preview {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 12px;
+        background: rgba(195, 244, 0, 0.3);
+        border-radius: 6px 0 0 6px;
+        pointer-events: none;
+        height: 0%;
+        transition: height 0.05s linear, opacity 0.1s ease;
+        opacity: 0;
+      }
+
+      #scroll-progress:hover {
+        width: 12px;
+      }
+
+      #scroll-progress:hover .progress-fill {
+        width: 12px;
+        border-radius: 6px 0 0 6px;
+      }
+
+      #scroll-progress:hover .scroll-preview {
+        opacity: 1;
+        width: 12px;
+        border-radius: 6px 0 0 6px;
+      }
+
+      #scroll-progress:hover .scroll-preview {
+        opacity: 1;
       }
 
       .book-now-spotlight {
@@ -507,6 +579,11 @@
   <body
     class="bg-background text-on-surface selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden"
   >
+
+    <div id="scroll-progress">
+      <div class="progress-fill"></div>
+      <div class="scroll-preview"></div>
+    </div>
 
     <!-- ========================================
          TOP NAVIGATION
@@ -850,72 +927,72 @@
                   </div>
                 </div>
               </div>
-              <div class="relative w-full overflow-hidden">
+<div class="relative w-full overflow-hidden min-h-[calc(100vh-120px)] pb-8 md:pb-12">
                 <div id="venue-background-mobile-list" class="absolute inset-0 z-0 bg-contain bg-center bg-no-repeat opacity-70 transition-all duration-1000 ease-in-out md:hidden"></div>
                 <div class="absolute inset-0 z-0 bg-black/55 md:hidden"></div>
-                <div class="vertical-line z-10"></div>
+                <div class="vertical-line z-10" style="top: 4rem; bottom: 3rem;"></div>
                 <div class="relative z-10 grid grid-cols-1 gap-y-0" id="city-list">
-<div class="city-item active relative pl-12 pb-10 group/city-item cursor-pointer hover:translate-x-1 transition-transform" data-city="01">
-                      <div class="dot absolute left-0 top-1 w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background transition-all duration-300"></div>
-                    <div class="flex items-baseline gap-4">
-                      <span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed transition-colors">01</span>
+<div class="city-item active relative pl-12 group/city-item cursor-pointer" data-city="01">
+                      <div class="dot absolute left-0 top-[4rem] w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background transition-all duration-300 -translate-y-1/2"></div>
+                    <div class="city-item-content flex items-baseline gap-4 pt-4 group-hover/city-item:translate-x-1 transition-transform">
+                      <span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover/city-item:text-primary-fixed transition-colors">01</span>
                       <div>
-                        <h3 class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed uppercase leading-none transition-colors">NEW YORK</h3>
+                        <h3 class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover/city-item:text-primary-fixed uppercase leading-none transition-colors">NEW YORK</h3>
                         <p class="font-label-bold text-xs text-on-surface-variant mt-1 uppercase">USA</p>
                       </div>
                     </div>
                     <div class="mt-4 h-[1px] w-full bg-outline-variant opacity-30"></div>
                   </div>
-                  <div class="city-item relative pl-12 pb-10 group/city-item cursor-pointer hover:translate-x-1 transition-transform" data-city="02">
-                    <div class="dot absolute left-0 top-1 w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background group-hover:bg-primary-fixed transition-all duration-300"></div>
-                    <div class="flex items-baseline gap-4">
-                      <span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed transition-colors">02</span>
+                  <div class="city-item relative pl-12 group/city-item cursor-pointer" data-city="02">
+                    <div class="dot absolute left-0 top-[4rem] w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background group-hover/city-item:bg-primary-fixed transition-all duration-300 -translate-y-1/2"></div>
+                    <div class="city-item-content flex items-baseline gap-4 pt-4 group-hover/city-item:translate-x-1 transition-transform">
+                      <span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover/city-item:text-primary-fixed transition-colors">02</span>
                       <div>
-                        <h3 class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed uppercase leading-none transition-colors">LONDON</h3>
+                        <h3 class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover/city-item:text-primary-fixed uppercase leading-none transition-colors">LONDON</h3>
                         <p class="font-label-bold text-xs text-on-surface-variant mt-1 uppercase">UK</p>
                       </div>
                     </div>
                     <div class="mt-4 h-[1px] w-full bg-outline-variant opacity-30"></div>
                   </div>
-                  <div class="city-item relative pl-12 pb-10 group/city-item cursor-pointer hover:translate-x-1 transition-transform" data-city="03">
-                    <div class="dot absolute left-0 top-1 w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background group-hover:bg-primary-fixed transition-all duration-300"></div>
-                    <div class="flex items-baseline gap-4">
-                      <span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed transition-colors">03</span>
+                  <div class="city-item relative pl-12 group/city-item cursor-pointer" data-city="03">
+                    <div class="dot absolute left-0 top-[4rem] w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background group-hover/city-item:bg-primary-fixed transition-all duration-300 -translate-y-1/2"></div>
+                    <div class="city-item-content flex items-baseline gap-4 pt-4 group-hover/city-item:translate-x-1 transition-transform">
+                      <span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover/city-item:text-primary-fixed transition-colors">03</span>
                       <div>
-                        <h3 class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed uppercase leading-none transition-colors">TOKYO</h3>
+                        <h3 class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover/city-item:text-primary-fixed uppercase leading-none transition-colors">TOKYO</h3>
                         <p class="font-label-bold text-xs text-on-surface-variant mt-1 uppercase">JAPAN</p>
                       </div>
                     </div>
                     <div class="mt-4 h-[1px] w-full bg-outline-variant opacity-30"></div>
                   </div>
-                  <div class="city-item relative pl-12 pb-10 group/city-item cursor-pointer hover:translate-x-1 transition-transform" data-city="04">
-                    <div class="dot absolute left-0 top-1 w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background group-hover:bg-primary-fixed transition-all duration-300"></div>
-                    <div class="flex items-baseline gap-4">
-                      <span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed transition-colors">04</span>
+                  <div class="city-item relative pl-12 group/city-item cursor-pointer" data-city="04">
+                    <div class="dot absolute left-0 top-[4rem] w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background group-hover/city-item:bg-primary-fixed transition-all duration-300 -translate-y-1/2"></div>
+                    <div class="city-item-content flex items-baseline gap-4 pt-4 group-hover/city-item:translate-x-1 transition-transform">
+                      <span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover/city-item:text-primary-fixed transition-colors">04</span>
                       <div>
-                        <h3 class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed uppercase leading-none transition-colors">BERLIN</h3>
+                        <h3 class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover/city-item:text-primary-fixed uppercase leading-none transition-colors">BERLIN</h3>
                         <p class="font-label-bold text-xs text-on-surface-variant mt-1 uppercase">GERMANY</p>
                       </div>
                     </div>
                     <div class="mt-4 h-[1px] w-full bg-outline-variant opacity-30"></div>
                   </div>
-                  <div class="city-item relative pl-12 pb-10 group/city-item cursor-pointer hover:translate-x-1 transition-transform" data-city="05">
-                    <div class="dot absolute left-0 top-1 w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background group-hover:bg-primary-fixed transition-all duration-300"></div>
-                    <div class="flex items-baseline gap-4">
-                      <span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed transition-colors">05</span>
+                  <div class="city-item relative pl-12 group/city-item cursor-pointer" data-city="05">
+<div class="dot absolute left-0 top-[4rem] w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background group-hover/city-item:bg-primary-fixed transition-all duration-300 -translate-y-1/2"></div>
+                    <div class="city-item-content flex items-baseline gap-4 pt-4 group-hover/city-item:translate-x-1 transition-transform">
+                      <span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover/city-item:text-primary-fixed transition-colors">05</span>
                       <div>
-                        <h3 class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed uppercase leading-none transition-colors">MUMBAI</h3>
+                        <h3 class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover/city-item:text-primary-fixed uppercase leading-none transition-colors">MUMBAI</h3>
                         <p class="font-label-bold text-xs text-on-surface-variant mt-1 uppercase">INDIA</p>
                       </div>
                     </div>
                     <div class="mt-4 h-[1px] w-full bg-outline-variant opacity-30"></div>
                   </div>
-                  <div class="city-item relative pl-12 group/city-item cursor-pointer hover:translate-x-1 transition-transform" data-city="06">
-                    <div class="dot absolute left-0 top-1 w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background group-hover:bg-primary-fixed transition-all duration-300"></div>
-                    <div class="flex items-baseline gap-4">
-                      <span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed transition-colors">06</span>
+<div class="city-item relative pl-12 group/city-item cursor-pointer" data-city="06">
+                    <div class="dot absolute left-0 top-[4rem] w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background group-hover/city-item:bg-primary-fixed transition-all duration-300 -translate-y-1/2"></div>
+                    <div class="city-item-content flex items-baseline gap-4 pt-4 group-hover/city-item:translate-x-1 transition-transform">
+                      <span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover/city-item:text-primary-fixed transition-colors">06</span>
                       <div>
-                        <h3 class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed uppercase leading-none transition-colors">SYDNEY</h3>
+                        <h3 class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover/city-item:text-primary-fixed uppercase leading-none transition-colors">SYDNEY</h3>
                         <p class="font-label-bold text-xs text-on-surface-variant mt-1 uppercase">AUSTRALIA</p>
                       </div>
                     </div>
@@ -1385,6 +1462,313 @@
         });
       </script>
     </section>
+
+    <!-- ========================================
+         OFFICIAL TRAILER / GALLERY SECTION
+         ======================================== -->
+    <section class="relative z-20 bg-black text-on-background overflow-hidden">
+      <div class="fixed inset-0 grit-overlay z-0"></div>
+      <main class="relative z-10 pt-20 pb-24 min-h-screen">
+        <!-- Header Section -->
+        <section class="px-margin-mobile text-center mb-stack-loose pt-4">
+          <div class="flex items-center justify-center gap-2 mb-2">
+            <div class="h-[1px] w-8 bg-primary-fixed"></div>
+            <span class="font-label-bold text-label-bold text-primary-fixed tracking-[0.3em]">EXPERIENCE THE CHAOS</span>
+            <div class="h-[1px] w-8 bg-primary-fixed"></div>
+          </div>
+          <h2 class="font-display-xl text-headline-lg leading-none uppercase mb-2">OFFICIAL TRAILER</h2>
+          <p class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">A NEW ERA. A GLOBAL TAKEOVER. <span class="text-primary-fixed">THE JOURNEY CONTINUES.</span></p>
+        </section>
+        <!-- Main Video Area -->
+        <div class="md:grid md:grid-cols-[1.8fr_1fr] md:gap-gutter md:px-margin-mobile md:mb-stack-loose"><section class="px-margin-mobile md:px-0 mb-8 md:mb-0">
+          <div class="relative aspect-video bg-surface-container overflow-hidden border border-outline-variant group">
+            <img id="main-trailer-img" class="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 transition-all duration-700" data-alt="A cinematic, low-angle shot of a high-energy rock concert stage in 2026. Intense beams of electric lime green light pierce through a thick haze of atmospheric smoke. In the foreground, the silhouette of a charismatic performer stands with arms raised against a sea of cheering fans. The visual style is gritty, high-contrast, and deeply saturated with neon greens and deep blacks, evoking a brutalist underground music aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoBMhey-qgFvt6v7LWY7sVQtH9sY7NQujjX3A-eeOEXYhteRjcDwjXFEokvKGhKiKoXpZ0_TDIBRltL95TVIgC-mKI1Eobe9v5ZobteheB7gbh_ncWkAQWcx7sFbm7ko_cKJByHRFWZaL23cgibmNahUzX4SPcFhLo9Twz_g52SDw9O54sewcWncF6BUh9SRv6F4BI8eK-FzJsK5TUD_rCG33O-7G3PlBJ9LnOc8jyDjRH-aKW3YJ476ZpbKffa6jqnAK8Sn68K86J">
+            <div class="absolute inset-0 flex flex-col items-center justify-center">
+              <div class="mb-4 text-center pointer-events-none">
+                <span id="main-trailer-subtitle" class="block font-label-bold text-[10px] tracking-[0.4em] text-primary-fixed mb-1">THE WORLD IS OUR STAGE</span>
+                <h3 id="main-trailer-title" class="font-accent-brush text-accent-brush text-primary-fixed leading-none drop-shadow-[0_5px_15px_rgba(171,214,0,0.5)] italic">THIS IS JUST<br>THE BEGINNING</h3>
+              </div>
+              <button class="w-20 h-20 rounded-full border-2 border-primary-fixed flex items-center justify-center bg-background/20 backdrop-blur-sm group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-4xl text-primary-fixed" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+              </button>
+            </div>
+            <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/80 to-transparent">
+              <div class="w-full h-1 bg-surface-bright rounded-full mb-3 relative">
+                <div class="absolute top-0 left-0 w-1/2 h-full bg-primary-fixed"></div>
+                <div class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-3 h-3 bg-primary-fixed rounded-full shadow-[0_0_10px_#abd600]"></div>
+              </div>
+              <div class="flex justify-between items-center text-[10px] font-label-bold text-on-surface-variant">
+                <div class="flex items-center gap-4">
+                  <span class="material-symbols-outlined text-sm">play_arrow</span>
+                  <span id="main-trailer-duration" class="">1:24 / 2:45</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="material-symbols-outlined text-sm">volume_up</span>
+                  <span class="material-symbols-outlined text-sm">settings</span>
+                  <span class="material-symbols-outlined text-sm">fullscreen</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section><section class="px-margin-mobile md:px-0 mb-stack-loose md:mb-0 md:text-left">
+          <div class="flex items-center gap-2 mb-4">
+            <span id="main-trailer-badge" class="font-label-bold text-label-bold text-primary-fixed">2026 WORLD TOUR</span>
+            <div class="h-[1px] w-12 bg-primary-fixed"></div>
+          </div>
+          <h4 id="main-trailer-heading" class="font-headline-lg-mobile text-headline-lg-mobile italic uppercase mb-4 relative inline-block">
+            THIS IS OUR TIME
+            <svg class="absolute -bottom-2 left-0 w-full" height="10" preserveAspectRatio="none" viewBox="0 0 100 10">
+              <path d="M0 5 Q25 0 50 5 T100 5" fill="transparent" stroke="#abd600" stroke-width="3"></path>
+            </svg>
+          </h4>
+          <p id="main-trailer-desc" class="font-body-lg text-body-lg text-on-surface-variant mb-8 mt-2">
+            From sold out nights to unforgettable moments, this is more than a tour. It's a movement. This is the beginning of <span class="text-primary-fixed">something legendary.</span>
+          </p>
+            <div class="grid grid-cols-3 gap-unit py-8 border-y border-outline-variant">
+              <div class="text-center border-r border-outline-variant">
+                <span class="material-symbols-outlined text-primary-fixed mb-2">groups</span>
+                <div id="stat-fans" class="font-headline-lg-mobile text-2xl text-primary-fixed">1.2M+</div>
+                <div class="font-label-bold text-[10px] text-on-surface-variant uppercase">Fans Worldwide</div>
+              </div>
+              <div class="text-center border-r border-outline-variant">
+                <span class="material-symbols-outlined text-primary-fixed mb-2">public</span>
+                <div id="stat-countries" class="font-headline-lg-mobile text-2xl text-primary-fixed">6</div>
+                <div class="font-label-bold text-[10px] text-on-surface-variant uppercase">Countries</div>
+              </div>
+              <div class="text-center">
+                <span id="stat-merch-icon" class="material-symbols-outlined text-primary-fixed mb-2">shopping_bag</span>
+                <div id="stat-merch" class="font-headline-lg-mobile text-2xl text-primary-fixed">100K+</div>
+                <div class="font-label-bold text-[10px] text-on-surface-variant uppercase">Merch Sold</div>
+              </div>
+            </div>
+          <button class="w-full mt-8 py-5 bg-primary-fixed text-on-primary-fixed font-headline-lg-mobile flex items-center justify-center gap-2 hover:glow-secondary transition-all active:scale-95">
+            WATCH FULL TRAILER
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+          </button>
+        </section></div>
+        <!-- Trailer Horizontal Grid -->
+        <section class="mb-12">
+          <div class="px-margin-mobile mb-4 flex items-center justify-center gap-4">
+            <div class="h-[1px] flex-1 bg-outline-variant"></div>
+            <span class="font-label-bold text-[10px] text-on-surface-variant tracking-[0.3em] uppercase">EXPLORE THE JOURNEY SO FAR</span>
+            <div class="h-[1px] flex-1 bg-outline-variant"></div>
+          </div>
+          <div class="flex overflow-x-auto gap-4 px-margin-mobile pb-6 no-scrollbar snap-x">
+            <div class="min-w-[240px] snap-start bg-surface-container border border-outline-variant p-2 group cursor-pointer active:scale-95 transition-transform" data-trailer-id="0">
+              <div class="relative aspect-video bg-black overflow-hidden mb-2">
+                <img class="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="A gritty, cinematic frame from a 2023 music documentary titled Ignition Tour. It shows a vast outdoor festival crowd illuminated by dramatic golden and electric green stage lights at dusk. The mood is raw and energetic, with heavy film grain and a dark-experimental aesthetic. High contrast highlights the silhouette of the performer against the strobe-lit night sky." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQrqNATkSIpIhh_94n6klxvxbsDSY-Hc1tMDtI9R_DbUTy35hp8uPCetY86XAJlF3qFaZsazejojUl_Rwa5rIsII0XPJQozEnXBJB0r-LGoKGsEn81xxtHFFbZRAwHmsj6n479l9fmAm40jD2ozO7SUXj7-mYSLdmwg-ruw1_mv9IZXRIsZxjJTYNJGc7xXC8k9qR8vcgR6H2YuS1h09xNn0R09NgSiWsbc3VUs1MZc48ozpeDCtbaEAwJ-UOb7pwYpb4cGhWucdYV">
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="material-symbols-outlined text-primary-fixed bg-background/60 rounded-full p-2 border border-primary-fixed">play_arrow</span>
+                </div>
+                <span class="absolute bottom-1 right-1 bg-black/80 px-2 py-1 text-[10px] font-label-bold">2:18</span>
+              </div>
+              <div class="text-center">
+                <div class="font-label-bold text-xs uppercase tracking-tighter">IGNITION TOUR</div>
+                <div class="font-headline-lg-mobile text-lg text-on-surface-variant">2023</div>
+              </div>
+            </div>
+            <div class="min-w-[240px] snap-start bg-surface-container border border-outline-variant p-2 group cursor-pointer active:scale-95 transition-transform" data-trailer-id="1">
+              <div class="relative aspect-video bg-black overflow-hidden mb-2">
+                <img class="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="Intense neon green lasers cutting through a dark venue in this frame from the 2024 Neon Horizons Tour trailer. The image features a modern, brutalist perspective on concert photography with sharp angles and heavy shadows. Atmospheric haze is punctuated by glowing electric light, creating a tactile and vibrant nocturnal atmosphere that feels fast-paced and kinetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSa-GdSkAbQOY_vKPUMgjSaCtqrjQFlsVheMsOetJrWoXusXLBheeR9sw8nqWcAv9Q4XqvxJHDb8qHjlLol5R9NISY9S6mZZhqEGUuBz0cBM2mJK77CJYvU-eU54y2v-8i8EsbQuLD7Cr0o8gJwrbofdh1JVqv3Dp93Jz4y7IIwR7jnu-C9Xff9ltj5jsCRL3K_4AZqEMnkqFZBNP7HkFOO93gjdDzrsNuZ736k5xk39JBszG-oQvsF6LZIMj3fD3TcDWFeXNT--dg">
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="material-symbols-outlined text-primary-fixed bg-background/60 rounded-full p-2 border border-primary-fixed">play_arrow</span>
+                </div>
+                <span class="absolute bottom-1 right-1 bg-black/80 px-2 py-1 text-[10px] font-label-bold">2:26</span>
+              </div>
+              <div class="text-center">
+                <div class="font-label-bold text-xs uppercase tracking-tighter">NEON HORIZONS TOUR</div>
+                <div class="font-headline-lg-mobile text-lg text-on-surface-variant">2024</div>
+              </div>
+            </div>
+            <div class="min-w-[240px] snap-start bg-surface-container border border-outline-variant p-2 group cursor-pointer active:scale-95 transition-transform" data-trailer-id="2">
+              <div class="relative aspect-video bg-black overflow-hidden mb-2">
+                <img class="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="A mosh pit in motion during the Chaos Rising Tour 2025. The photo uses a long exposure to capture blurred movement of people dancing under intense strobe lighting. The color palette is restricted to deep blacks and flashes of neon green, creating a gritty, chaotic, and sensory-heavy scene that perfectly embodies the brand's aggressive and unapologetic personality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPZbkA5GCre6aomLZppDZrCewzlF5xyFyWF_g7uzuN_vysKiLks5CaUuLJTj9_JDKs6wZDmNpmT-xXfrKF48flf4z5kMFTnnvDql-VFZennUBblLkVXifuJmZZwGb9-Dc3Ud3K2S2ksDnWouedft5NyRLaXLNw-cJLUx10ri-gAZpQkscSuOUBfGHCmZaZS6phiETsD2pDKPteh8r2RyHeT9nxQsDmrcJT9PAX5iqjPk5KdH2b9tveGzLIdrV0AdmvhhyZX7hoNuGB">
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="material-symbols-outlined text-primary-fixed bg-background/60 rounded-full p-2 border border-primary-fixed">play_arrow</span>
+                </div>
+                <span class="absolute bottom-1 right-1 bg-black/80 px-2 py-1 text-[10px] font-label-bold">2:31</span>
+              </div>
+              <div class="text-center">
+                <div class="font-label-bold text-xs uppercase tracking-tighter">CHAOS RISING TOUR</div>
+                <div class="font-headline-lg-mobile text-lg text-on-surface-variant">2025</div>
+              </div>
+            </div>
+            <div class="min-w-[240px] snap-start bg-surface-container border-2 border-primary-fixed p-2 group cursor-pointer active:scale-95 transition-transform neon-border-glow" data-trailer-id="3">
+              <div class="relative aspect-video bg-black overflow-hidden mb-2">
+                <img class="w-full h-full object-cover grayscale-0 opacity-80" data-alt="A cinematic concert stage bathed in electric lime green light from the 2026 World Tour trailer. The focus is on a futuristic, high-tech stage production with massive LED screens displaying distorted graphic patterns. The atmosphere is nocturnal and electric, with high contrast between the glowing neon elements and the deep shadows of the large crowd in the foreground." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqeK-KdwsaMxjtZJoeUekGyiZcoG_VlLBhPyT3SX0XOihrsus2opCDEg_7ExFpeMtAttFd3qMfWoQTofTa4ucgqeEBkqJeSZ0G2XfJFirkz79vPRunPqvy2E1OlQnwbFQRPO3BYGffttqAFVmFvx9z4iuCZYWmR8q9IpRwOpbWkXtffkwCQ09Jfw-HySHCBiDcRXH9rHG6YOUmyy8XQxTr7eb95Hgot94Z86C2UKrptDBhAWmlxcyO-NwTGkp4vO-LL82wLUIBBTz3">
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="material-symbols-outlined text-background bg-primary-fixed rounded-full p-2 border border-primary-fixed" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                </div>
+                <span class="absolute bottom-1 right-1 bg-primary-fixed px-2 py-1 text-[10px] font-label-bold text-on-primary-fixed">2:45</span>
+              </div>
+              <div class="text-center">
+                <div class="font-label-bold text-xs uppercase tracking-tighter text-primary-fixed">WORLD TOUR</div>
+                <div class="font-headline-lg-mobile text-lg text-primary-fixed">2026</div>
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-center mt-4">
+            <div class="flex flex-col items-center gap-1 opacity-60">
+              <span class="material-symbols-outlined text-primary-fixed text-sm">keyboard_double_arrow_up</span>
+              <span class="font-label-bold text-[8px] uppercase tracking-[0.4em]">CHOOSE A TOUR TRAILER</span>
+            </div>
+          </div>
+        </section>
+      </main>
+    </section>
+
+    <!-- Trailer Gallery Interaction Script -->
+    <script>
+      (function() {
+        const trailerData = [
+          {
+            subtitle: 'THE SPARK',
+            tagline: 'FROM SPARK TO FLAME',
+            badge: 'IGNITION TOUR 2023',
+            heading: 'IT STARTS WITH A SPARK',
+            duration: '2:18',
+            description: 'From small stages to sold-out nights, every journey begins with a single step. Witness the tour that transformed a dream into a movement and ignited the first wave of chaos.',
+            stats: {
+              fans: '118.4K+',
+              countries: '6',
+              merchIcon: 'verified',
+              merch: '14K+'
+            }
+          },
+          {
+            subtitle: 'THE HORIZON',
+            tagline: 'EXPANDING THE VISION',
+            badge: 'NEON HORIZONS TOUR 2024',
+            heading: 'BEYOND THE HORIZON',
+            duration: '2:26',
+            description: 'The movement crossed borders and lit up new horizons. Bigger crowds, louder voices, and unforgettable nights across six new countries.',
+            stats: {
+              fans: '221.3K+',
+              countries: '6',
+              merchIcon: 'shopping_bag',
+              merch: '32K+'
+            }
+          },
+          {
+            subtitle: 'THE AWAKENING',
+            tagline: 'A GLOBAL PHENOMENON',
+            badge: 'CHAOS RISING TOUR 2025',
+            heading: 'THE WORLD TAKES NOTICE',
+            duration: '2:31',
+            description: 'What began as a spark became a global phenomenon. Massive arenas, record-breaking attendance, and the announcement that changed everything.',
+            stats: {
+              fans: '419.6K+',
+              countries: '6',
+              merchIcon: 'military_tech',
+              merch: '78K+'
+            }
+          },
+          {
+            subtitle: 'THE WORLD IS OUR STAGE',
+            tagline: 'THIS IS OUR TIME',
+            badge: 'WORLD TOUR 2026',
+            heading: 'THIS IS OUR TIME',
+            duration: '2:45',
+            description: 'From sold-out nights to unforgettable moments, this is more than a tour. It\'s a movement. This is the beginning of something legendary.',
+            stats: {
+              fans: '1.2M+',
+              countries: '6',
+              merchIcon: 'shopping_bag',
+              merch: '100K+'
+            }
+          }
+        ];
+
+        const mainImg = document.getElementById('main-trailer-img');
+        const mainSubtitle = document.getElementById('main-trailer-subtitle');
+        const mainTitle = document.getElementById('main-trailer-title');
+        const mainDuration = document.getElementById('main-trailer-duration');
+        const mainBadge = document.getElementById('main-trailer-badge');
+        const mainHeading = document.getElementById('main-trailer-heading');
+        const mainDesc = document.getElementById('main-trailer-desc');
+        const statFans = document.getElementById('stat-fans');
+        const statCountries = document.getElementById('stat-countries');
+        const statMerchIcon = document.getElementById('stat-merch-icon');
+        const statMerch = document.getElementById('stat-merch');
+
+        const thumbnails = document.querySelectorAll('[data-trailer-id]');
+
+        function updateMainTrailer(index) {
+          const data = trailerData[index];
+          if (!data) return;
+
+          if (mainSubtitle) mainSubtitle.textContent = data.subtitle;
+          if (mainTitle) mainTitle.innerHTML = data.tagline;
+          if (mainDuration) mainDuration.textContent = data.duration + ' / 2:45';
+          if (mainBadge) mainBadge.textContent = data.badge;
+          if (mainHeading) mainHeading.textContent = data.heading;
+          if (mainDesc) mainDesc.textContent = data.description;
+
+          if (statFans) statFans.textContent = data.stats.fans;
+          if (statCountries) statCountries.textContent = data.stats.countries;
+          if (statMerchIcon) statMerchIcon.textContent = data.stats.merchIcon;
+          if (statMerch) statMerch.textContent = data.stats.merch;
+
+          const thumbImg = thumbnails[index].querySelector('img');
+          if (mainImg && thumbImg) {
+            mainImg.src = thumbImg.src;
+            mainImg.alt = thumbImg.getAttribute('data-alt') || '';
+          }
+
+          thumbnails.forEach((thumb, i) => {
+            if (i === index) {
+              thumb.classList.add('border-2', 'border-primary-fixed', 'neon-border-glow');
+              thumb.classList.remove('border', 'border-outline-variant');
+              const label = thumb.querySelector('.font-label-bold.text-xs');
+              if (label) label.classList.add('text-primary-fixed');
+              const yearEl = thumb.querySelector('.font-headline-lg-mobile.text-lg');
+              if (yearEl) yearEl.classList.add('text-primary-fixed');
+              const thumbImgEl = thumb.querySelector('img');
+              if (thumbImgEl) {
+                thumbImgEl.classList.remove('opacity-50', 'grayscale');
+                thumbImgEl.classList.add('grayscale-0', 'opacity-80');
+              }
+              const playBtn = thumb.querySelector('.material-symbols-outlined');
+              if (playBtn) {
+                playBtn.classList.remove('text-primary-fixed', 'bg-background/60', 'border', 'border-primary-fixed');
+                playBtn.classList.add('text-background', 'bg-primary-fixed', 'border', 'border-primary-fixed');
+              }
+              const durSpan = thumb.querySelector('.absolute.bottom-1.right-1');
+              if (durSpan) {
+                durSpan.classList.remove('bg-black/80', 'text-on-surface-variant');
+                durSpan.classList.add('bg-primary-fixed', 'text-on-primary-fixed');
+              }
+            } else {
+              thumb.classList.remove('border-2', 'border-primary-fixed', 'neon-border-glow');
+              thumb.classList.add('border', 'border-outline-variant');
+              const label = thumb.querySelector('.font-label-bold.text-xs');
+              if (label) label.classList.remove('text-primary-fixed');
+              const yearEl = thumb.querySelector('.font-headline-lg-mobile.text-lg');
+              if (yearEl) yearEl.classList.remove('text-primary-fixed');
+              const thumbImgEl = thumb.querySelector('img');
+              if (thumbImgEl) {
+                thumbImgEl.classList.add('opacity-50', 'grayscale');
+                thumbImgEl.classList.remove('grayscale-0', 'opacity-80');
+              }
+              const playBtn = thumb.querySelector('.material-symbols-outlined');
+              if (playBtn) {
+                playBtn.classList.add('text-primary-fixed', 'bg-background/60', 'border', 'border-primary-fixed');
+                playBtn.classList.remove('text-background', 'bg-primary-fixed');
+              }
+              const durSpan = thumb.querySelector('.absolute.bottom-1.right-1');
+              if (durSpan) {
+                durSpan.classList.add('bg-black/80');
+                durSpan.classList.remove('bg-primary-fixed', 'text-on-primary-fixed');
+              }
+            }
+          });
+        }
+
+        thumbnails.forEach((thumb, index) => {
+          thumb.addEventListener('click', () => updateMainTrailer(index));
+        });
+      })();
+    </script>
 
     <!-- ========================================
          EXTERNAL SCRIPTS
@@ -2076,6 +2460,38 @@
           el.style.transform = `translate(${x * depth}px, ${y * depth}px)`;
         });
       });
+
+      const scrollProgress = document.getElementById('scroll-progress');
+      const progressFill = document.querySelector('.progress-fill');
+      const scrollPreview = document.querySelector('.scroll-preview');
+      if (scrollProgress && progressFill && scrollPreview) {
+        window.addEventListener('scroll', () => {
+          const scrollTop = window.scrollY;
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const scrollPercent = (scrollTop / docHeight) * 100;
+          progressFill.style.height = scrollPercent + '%';
+        }, { passive: true });
+
+        scrollProgress.addEventListener('mousemove', (e) => {
+          const rect = scrollProgress.getBoundingClientRect();
+          const relativeY = e.clientY - rect.top;
+          const percent = Math.max(0, Math.min(1, relativeY / rect.height));
+          const previewHeight = percent * 100;
+          scrollPreview.style.height = previewHeight + '%';
+        });
+
+        scrollProgress.addEventListener('mouseleave', () => {
+          scrollPreview.style.height = '0%';
+        });
+
+        scrollProgress.addEventListener('click', (e) => {
+          const rect = scrollProgress.getBoundingClientRect();
+          const relativeY = e.clientY - rect.top;
+          const percent = Math.max(0, Math.min(1, relativeY / rect.height));
+          const targetScroll = percent * (document.documentElement.scrollHeight - window.innerHeight);
+          window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+        });
+      }
     </script>
 
     <!-- ========================================
