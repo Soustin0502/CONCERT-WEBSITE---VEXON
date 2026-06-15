@@ -855,7 +855,7 @@
                 <div class="absolute inset-0 z-0 bg-black/55 md:hidden"></div>
                 <div class="vertical-line z-10"></div>
                 <div class="relative z-10 grid grid-cols-1 gap-y-0" id="city-list">
-<div class="city-item active relative pl-12 pb-10 group cursor-pointer hover:translate-x-1 transition-transform" data-city="01">
+<div class="city-item active relative pl-12 pb-10 group/city-item cursor-pointer hover:translate-x-1 transition-transform" data-city="01">
                       <div class="dot absolute left-0 top-1 w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background transition-all duration-300"></div>
                     <div class="flex items-baseline gap-4">
                       <span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed transition-colors">01</span>
@@ -866,7 +866,7 @@
                     </div>
                     <div class="mt-4 h-[1px] w-full bg-outline-variant opacity-30"></div>
                   </div>
-                  <div class="city-item relative pl-12 pb-10 group cursor-pointer hover:translate-x-1 transition-transform" data-city="02">
+                  <div class="city-item relative pl-12 pb-10 group/city-item cursor-pointer hover:translate-x-1 transition-transform" data-city="02">
                     <div class="dot absolute left-0 top-1 w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background group-hover:bg-primary-fixed transition-all duration-300"></div>
                     <div class="flex items-baseline gap-4">
                       <span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed transition-colors">02</span>
@@ -877,7 +877,7 @@
                     </div>
                     <div class="mt-4 h-[1px] w-full bg-outline-variant opacity-30"></div>
                   </div>
-                  <div class="city-item relative pl-12 pb-10 group cursor-pointer hover:translate-x-1 transition-transform" data-city="03">
+                  <div class="city-item relative pl-12 pb-10 group/city-item cursor-pointer hover:translate-x-1 transition-transform" data-city="03">
                     <div class="dot absolute left-0 top-1 w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background group-hover:bg-primary-fixed transition-all duration-300"></div>
                     <div class="flex items-baseline gap-4">
                       <span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed transition-colors">03</span>
@@ -888,7 +888,7 @@
                     </div>
                     <div class="mt-4 h-[1px] w-full bg-outline-variant opacity-30"></div>
                   </div>
-                  <div class="city-item relative pl-12 pb-10 group cursor-pointer hover:translate-x-1 transition-transform" data-city="04">
+                  <div class="city-item relative pl-12 pb-10 group/city-item cursor-pointer hover:translate-x-1 transition-transform" data-city="04">
                     <div class="dot absolute left-0 top-1 w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background group-hover:bg-primary-fixed transition-all duration-300"></div>
                     <div class="flex items-baseline gap-4">
                       <span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed transition-colors">04</span>
@@ -899,7 +899,7 @@
                     </div>
                     <div class="mt-4 h-[1px] w-full bg-outline-variant opacity-30"></div>
                   </div>
-                  <div class="city-item relative pl-12 pb-10 group cursor-pointer hover:translate-x-1 transition-transform" data-city="05">
+                  <div class="city-item relative pl-12 pb-10 group/city-item cursor-pointer hover:translate-x-1 transition-transform" data-city="05">
                     <div class="dot absolute left-0 top-1 w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background group-hover:bg-primary-fixed transition-all duration-300"></div>
                     <div class="flex items-baseline gap-4">
                       <span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed transition-colors">05</span>
@@ -910,7 +910,7 @@
                     </div>
                     <div class="mt-4 h-[1px] w-full bg-outline-variant opacity-30"></div>
                   </div>
-                  <div class="city-item relative pl-12 group cursor-pointer hover:translate-x-1 transition-transform" data-city="06">
+                  <div class="city-item relative pl-12 group/city-item cursor-pointer hover:translate-x-1 transition-transform" data-city="06">
                     <div class="dot absolute left-0 top-1 w-6 h-6 bg-surface-container-highest rounded-full border-4 border-background group-hover:bg-primary-fixed transition-all duration-300"></div>
                     <div class="flex items-baseline gap-4">
                       <span class="font-headline-lg-mobile text-3xl text-on-surface-variant group-hover:text-primary-fixed transition-colors">06</span>
@@ -1722,7 +1722,33 @@
       });
 
       function enableTouchHover() {
-        const hoverElements = document.querySelectorAll('[class*="hover:"], [class*="group-hover:"], .push-back-card, .book-now-spotlight, .trailer-spotlight, .ticket-spotlight, .city-item, .city-card');
+        const hoverSelectors = [
+          '.push-back-card',
+          '.book-now-spotlight',
+          '.trailer-spotlight',
+          '.ticket-spotlight',
+          '.city-item',
+          '.city-card',
+          '[stagger-link]',
+          '.glow-sm',
+          '.neon-bloom-green',
+          '.neon-bloom-red',
+          'button[class*="hover:"]',
+          'a[class*="hover:"]',
+          '.group-hover\\:text-primary-fixed',
+          '.group-hover\\:bg-primary-fixed',
+          '.group-hover\\:text-primary-fixed\\/10',
+          '.group-hover\\:border-primary-fixed',
+          '.group-hover\\:translate-x-1',
+          '.hover\\:text-primary-fixed',
+          '.hover\\:bg-primary-fixed\\/10',
+          '.hover\\:scale-95',
+          '.hover\\:text-\\[\\#c3f400\\]',
+          '.hover\\:translate-x-1',
+          '.group\\/city-item',
+        ];
+
+        const hoverElements = document.querySelectorAll(hoverSelectors.join(', '));
 
         hoverElements.forEach(el => {
           let touchTimeout;
@@ -1779,11 +1805,37 @@
           .touch-active.glow-sm {
             text-shadow: 0 0 10px rgba(195, 244, 0, 0.6);
           }
+          .touch-active.neon-bloom-green,
+          .touch-active.neon-bloom-red {
+            opacity: 1;
+          }
+          .touch-active button,
+          .touch-active a {
+            transform: scale(0.98);
+          }
+          .touch-active[stagger-link]:not([data-active="true"]) [stagger-link-text],
+          .touch-active[stagger-link]:not([data-active="true"]) .char {
+            text-shadow: 0 1.1em 0 #c3f400;
+          }
+          .group\\/city-item.touch-active .dot {
+            background-color: #abd600;
+            box-shadow: 0 0 0 4px #131313, 0 0 15px #abd600, 0 0 30px #abd600;
+            border-color: #131313;
+            transform: scale(1.2);
+          }
+          .group\\/city-item.touch-active h3,
+          .group\\/city-item.touch-active span {
+            color: #abd600;
+          }
         `;
         document.head.appendChild(style);
       }
 
-      document.addEventListener('DOMContentLoaded', enableTouchHover);
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', enableTouchHover);
+      } else {
+        enableTouchHover();
+      }
 
       document.addEventListener("mousemove", (e) => {
         const x = (e.clientX / window.innerWidth - 0.5) * 20;
