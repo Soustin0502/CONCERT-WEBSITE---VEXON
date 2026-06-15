@@ -1722,110 +1722,270 @@
       });
 
       function enableTouchHover() {
-        const hoverSelectors = [
-          '.push-back-card',
-          '.book-now-spotlight',
-          '.trailer-spotlight',
-          '.ticket-spotlight',
-          '.city-item',
-          '.city-card',
-          '[stagger-link]',
-          '.glow-sm',
-          '.neon-bloom-green',
-          '.neon-bloom-red',
-          'button[class*="hover:"]',
-          'a[class*="hover:"]',
-          '.group-hover\\:text-primary-fixed',
-          '.group-hover\\:bg-primary-fixed',
-          '.group-hover\\:text-primary-fixed\\/10',
-          '.group-hover\\:border-primary-fixed',
-          '.group-hover\\:translate-x-1',
-          '.hover\\:text-primary-fixed',
-          '.hover\\:bg-primary-fixed\\/10',
-          '.hover\\:scale-95',
-          '.hover\\:text-\\[\\#c3f400\\]',
-          '.hover\\:translate-x-1',
-          '.group\\/city-item',
-        ];
+        const staggerLinks = document.querySelectorAll('[stagger-link]');
+        const pushBackCards = document.querySelectorAll('.push-back-card');
+        const spotlightButtons = document.querySelectorAll('.book-now-spotlight, .trailer-spotlight, .ticket-spotlight');
+        const cityItems = document.querySelectorAll('.city-item');
+        const cityCards = document.querySelectorAll('.city-card');
+        const glowElements = document.querySelectorAll('.glow-sm, .neon-bloom-green, .neon-bloom-red');
+        const groupCityItems = document.querySelectorAll('.group\\/city-item');
 
-        const hoverElements = document.querySelectorAll(hoverSelectors.join(', '));
+        function triggerStaggerHover(link, isEnter) {
+          if (!window.gsap) return;
+          const letters = link.querySelectorAll('.char');
+          if (letters.length === 0) return;
+          
+          window.gsap.to(letters, {
+            yPercent: isEnter ? -100 : 0,
+            duration: 0.28,
+            ease: "power4.out",
+            stagger: 0.008,
+            overwrite: true,
+          });
+        }
 
-        hoverElements.forEach(el => {
+        function triggerPushBackHover(card, isEnter, event) {
+          if (isEnter) {
+            if (event && event.touches && event.touches[0]) {
+              updatePushBackPosition(card, event);
+            } else {
+              card.style.setProperty('--press-rotate-x', '0deg');
+              card.style.setProperty('--press-rotate-y', '0deg');
+            }
+            card.classList.add('touch-hover');
+          } else {
+            card.classList.remove('touch-hover');
+            card.style.setProperty('--press-rotate-x', '0deg');
+            card.style.setProperty('--press-rotate-y', '0deg');
+          }
+        }
+
+        function updatePushBackPosition(card, event) {
+          if (!card.classList.contains('touch-hover')) return;
+          const rect = card.getBoundingClientRect();
+          if (event && event.touches && event.touches[0]) {
+            const touch = event.touches[0];
+            const x = touch.clientX - rect.left;
+            const y = touch.clientY - rect.top;
+            const xPercent = x / rect.width;
+            const yPercent = y / rect.height;
+            card.style.setProperty('--press-x', `${x}px`);
+            card.style.setProperty('--press-y', `${y}px`);
+            card.style.setProperty('--press-rotate-x', `${(0.5 - yPercent) * 8}deg`);
+            card.style.setProperty('--press-rotate-y', `${(xPercent - 0.5) * 8}deg`);
+          }
+        }
+
+        function triggerSpotlightHover(btn, isEnter, event) {
+          if (isEnter) {
+            const rect = btn.getBoundingClientRect();
+            let x = rect.width / 2;
+            let y = rect.height / 2;
+            if (event && event.touches && event.touches[0]) {
+              const touch = event.touches[0];
+              x = touch.clientX - rect.left;
+              y = touch.clientY - rect.top;
+            }
+            btn.style.setProperty('--spotlight-x', `${x}px`);
+            btn.style.setProperty('--spotlight-y', `${y}px`);
+            btn.classList.add('touch-hover');
+          } else {
+            btn.classList.remove('touch-hover');
+          }
+        }
+
+        function updateSpotlightPosition(btn, event) {
+          if (!btn.classList.contains('touch-hover')) return;
+          const rect = btn.getBoundingClientRect();
+          if (event && event.touches && event.touches[0]) {
+            const touch = event.touches[0];
+            const x = touch.clientX - rect.left;
+            const y = touch.clientY - rect.top;
+            btn.style.setProperty('--spotlight-x', `${x}px`);
+            btn.style.setProperty('--spotlight-y', `${y}px`);
+          }
+        }
+
+        function triggerCityItemHover(item, isEnter) {
+          if (isEnter) {
+            item.classList.add('touch-hover');
+          } else {
+            item.classList.remove('touch-hover');
+          }
+        }
+
+        function triggerCityCardHover(card, isEnter) {
+          if (isEnter) {
+            card.classList.add('touch-hover');
+          } else {
+            card.classList.remove('touch-hover');
+          }
+        }
+
+        function triggerGlowHover(el, isEnter) {
+          if (isEnter) {
+            el.classList.add('touch-hover');
+          } else {
+            el.classList.remove('touch-hover');
+          }
+        }
+
+        function addTouchHandlers(elements, onEnter, onLeave) {
+          elements.forEach(el => {
+            let touchTimeout;
+            let isActive = false;
+
+            el.addEventListener('touchstart', (e) => {
+              isActive = true;
+              clearTimeout(touchTimeout);
+              onEnter(el);
+            }, { passive: true });
+
+            el.addEventListener('touchend', (e) => {
+              if (!isActive) return;
+              touchTimeout = setTimeout(() => {
+                isActive = false;
+                onLeave(el);
+              }, 300);
+            }, { passive: true });
+
+            el.addEventListener('touchcancel', () => {
+              isActive = false;
+              clearTimeout(touchTimeout);
+              onLeave(el);
+            }, { passive: true });
+
+            el.addEventListener('touchmove', (e) => {
+              const touch = e.touches[0];
+              const target = document.elementFromPoint(touch.clientX, touch.clientY);
+              if (!el.contains(target) && isActive) {
+                isActive = false;
+                clearTimeout(touchTimeout);
+                onLeave(el);
+              }
+            }, { passive: true });
+          });
+        }
+
+        addTouchHandlers(staggerLinks, triggerStaggerHover, (el) => triggerStaggerHover(el, false));
+        pushBackCards.forEach(card => {
           let touchTimeout;
+          let isActive = false;
 
-          el.addEventListener('touchstart', function(e) {
-            this.classList.add('touch-active');
+          card.addEventListener('touchstart', (e) => {
+            isActive = true;
             clearTimeout(touchTimeout);
+            triggerPushBackHover(card, true, e);
           }, { passive: true });
 
-          el.addEventListener('touchend', function(e) {
+          card.addEventListener('touchmove', (e) => {
+            if (!isActive) return;
+            updatePushBackPosition(card, e);
+          }, { passive: true });
+
+          card.addEventListener('touchend', (e) => {
+            if (!isActive) return;
             touchTimeout = setTimeout(() => {
-              this.classList.remove('touch-active');
+              isActive = false;
+              triggerPushBackHover(card, false);
             }, 300);
           }, { passive: true });
 
-          el.addEventListener('touchcancel', function(e) {
-            this.classList.remove('touch-active');
+          card.addEventListener('touchcancel', () => {
+            isActive = false;
+            clearTimeout(touchTimeout);
+            triggerPushBackHover(card, false);
           }, { passive: true });
         });
+        spotlightButtons.forEach(btn => {
+          let touchTimeout;
+          let isActive = false;
+
+          btn.addEventListener('touchstart', (e) => {
+            isActive = true;
+            clearTimeout(touchTimeout);
+            triggerSpotlightHover(btn, true, e);
+          }, { passive: true });
+
+          btn.addEventListener('touchmove', (e) => {
+            if (!isActive) return;
+            updateSpotlightPosition(btn, e);
+          }, { passive: true });
+
+          btn.addEventListener('touchend', (e) => {
+            if (!isActive) return;
+            touchTimeout = setTimeout(() => {
+              isActive = false;
+              triggerSpotlightHover(btn, false);
+            }, 300);
+          }, { passive: true });
+
+          btn.addEventListener('touchcancel', () => {
+            isActive = false;
+            clearTimeout(touchTimeout);
+            triggerSpotlightHover(btn, false);
+          }, { passive: true });
+        });
+        addTouchHandlers(cityItems, triggerCityItemHover, (el) => triggerCityItemHover(el, false));
+        addTouchHandlers(cityCards, triggerCityCardHover, (el) => triggerCityCardHover(el, false));
+        addTouchHandlers(glowElements, triggerGlowHover, (el) => triggerGlowHover(el, false));
+        addTouchHandlers(groupCityItems, triggerCityItemHover, (el) => triggerCityItemHover(el, false));
 
         const style = document.createElement('style');
         style.textContent = `
-          .touch-active.push-back-card {
+          .touch-hover.push-back-card {
             transform: perspective(900px) rotateX(var(--press-rotate-x, 0deg)) rotateY(var(--press-rotate-y, 0deg)) scale(0.985);
             box-shadow: 0 18px 40px rgba(0, 0, 0, 0.42), inset 0 0 36px rgba(0, 0, 0, 0.18);
+            transition: transform 80ms ease, box-shadow 80ms ease;
           }
-          .touch-active.push-back-card::after {
+          .touch-hover.push-back-card::after {
             opacity: 1;
+            transition: opacity 180ms ease;
           }
-          .touch-active.book-now-spotlight::before,
-          .touch-active.trailer-spotlight::before,
-          .touch-active.ticket-spotlight::before {
+          .touch-hover.book-now-spotlight::before,
+          .touch-hover.trailer-spotlight::before,
+          .touch-hover.ticket-spotlight::before {
             opacity: 1;
             transform: translate(-50%, -50%) scale(1);
+            transition: opacity 180ms ease, transform 180ms ease;
           }
-          .touch-active.city-item .dot {
+          .touch-hover.city-item .dot {
             background-color: #abd600;
             box-shadow: 0 0 0 4px #131313, 0 0 15px #abd600, 0 0 30px #abd600;
             border-color: #131313;
             transform: scale(1.2);
             z-index: 10;
+            transition: all 300ms ease;
           }
-          .touch-active.city-item h3,
-          .touch-active.city-item span {
+          .touch-hover.city-item h3,
+          .touch-hover.city-item span {
             color: #abd600;
+            transition: color 300ms ease;
           }
-          .touch-active.city-card::before {
+          .touch-hover.city-card::before {
             border-color: #c3f400;
+            transition: border-color 300ms ease;
           }
-          .touch-active[stagger-link] [stagger-link-text],
-          .touch-active[stagger-link] .char {
-            text-shadow: 0 1.1em 0 #c3f400;
-          }
-          .touch-active.glow-sm {
+          .touch-hover.glow-sm {
             text-shadow: 0 0 10px rgba(195, 244, 0, 0.6);
+            transition: text-shadow 300ms ease;
           }
-          .touch-active.neon-bloom-green,
-          .touch-active.neon-bloom-red {
+          .touch-hover.neon-bloom-green,
+          .touch-hover.neon-bloom-red {
             opacity: 1;
+            transition: opacity 300ms ease;
           }
-          .touch-active button,
-          .touch-active a {
-            transform: scale(0.98);
-          }
-          .touch-active[stagger-link]:not([data-active="true"]) [stagger-link-text],
-          .touch-active[stagger-link]:not([data-active="true"]) .char {
-            text-shadow: 0 1.1em 0 #c3f400;
-          }
-          .group\\/city-item.touch-active .dot {
+          .group\\/city-item.touch-hover .dot {
             background-color: #abd600;
             box-shadow: 0 0 0 4px #131313, 0 0 15px #abd600, 0 0 30px #abd600;
             border-color: #131313;
             transform: scale(1.2);
+            transition: all 300ms ease;
           }
-          .group\\/city-item.touch-active h3,
-          .group\\/city-item.touch-active span {
+          .group\\/city-item.touch-hover h3,
+          .group\\/city-item.touch-hover span {
             color: #abd600;
+            transition: color 300ms ease;
           }
         `;
         document.head.appendChild(style);
